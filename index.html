@@ -1,65 +1,97 @@
+<!DOCTYPE html>
 <html lang="hi">
 <head>
     <meta charset="UTF-8">
-    <title>A1 COMMANDER CORE</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A1 COMMANDER SYSTEM</title>
     <style>
-        body { background: #000; color: #00ff41; font-family: 'Courier New', monospace; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow-x: hidden; }
-        /* लॉगिन हिस्सा */
-        #login-gate { text-align: center; border: 2px solid #00ff41; padding: 40px; border-radius: 15px; box-shadow: 0 0 20px #00ff41; background: rgba(0,10,0,0.9); }
-        /* एडमिन हिस्सा (शुरू में छुपा हुआ) */
-        #admin-panel { display: none; width: 95%; padding: 20px; background: #000510; min-height: 90vh; border: 1px solid #00d4ff; box-shadow: 0 0 30px #00d4ff; border-radius: 10px; }
-        input { background: #111; border: 1px solid #00ff41; color: #00ff41; padding: 12px; margin: 10px; width: 250px; text-align: center; }
-        .btn { background: #00ff41; color: #000; padding: 12px 30px; border: none; font-weight: bold; cursor: pointer; width: 100%; }
-        .gen-btn { background: #00d4ff; color: #000; padding: 10px; margin: 5px; border: none; cursor: pointer; font-weight: bold; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; color: #00d4ff; font-size: 12px; }
-        th, td { border: 1px solid #113355; padding: 10px; text-align: left; }
+        body { background: #000; color: #00ff41; font-family: 'Courier New', monospace; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .box { background: rgba(0, 10, 20, 0.95); border: 2px solid #00ff41; padding: 25px; border-radius: 15px; text-align: center; width: 320px; box-shadow: 0 0 20px #00ff41; }
+        input { background: #000; border: 1px solid #00ff41; color: #00ff41; padding: 12px; margin: 10px 0; width: 90%; border-radius: 5px; }
+        .btn { background: #00ff41; color: black; padding: 12px; border: none; width: 100%; border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        #adminPanel, #customerInterface { display: none; }
+        .status { font-size: 12px; color: #00d4ff; margin-bottom: 15px; }
     </style>
 </head>
 <body>
 
-    <div id="login-gate">
-        <h2 style="text-shadow: 0 0 10px #00ff41;">A1 MASTER ACCESS</h2>
-        <input type="password" id="mKey" placeholder="ENTER ACCESS KEY"> <br>
-        <button class="btn" onclick="openSys()">AUTHORIZE</button>
-        <p style="color:red; font-size: 10px; margin-top: 20px;">Ak4041860@gmail.com</p>
+    <div id="mainGate" class="box">
+        <h2 style="text-shadow: 0 0 10px #00ff41;">A1 MASTER SYSTEM</h2>
+        <p class="status">CHOOSE YOUR PORTAL</p>
+        <button class="btn" onclick="showLogin('admin')">ADMIN LOGIN</button>
+        <button class="btn" style="background:#00d4ff" onclick="showLogin('user')">CUSTOMER LOGIN</button>
     </div>
 
-    <div id="admin-panel">
-        <div style="display:flex; justify-content: space-between; border-bottom: 2px solid #00d4ff; padding-bottom: 10px;">
-            <h2 style="margin:0;">SYSTEM LIVE: AK4041860</h2>
-            <button onclick="location.reload()" style="background:red; color:white; border:none; padding:5px 10px;">LOGOUT</button>
-        </div>
-        
-        <div style="margin-top:20px; padding:15px; border:1px solid #444;">
-            <h3>GENERATE CODES</h3>
-            <button class="gen-btn" onclick="g('1 DAY')">1 DAY</button>
-            <button class="gen-btn" style="background:magenta" onclick="g('7 DAYS')">7 DAYS</button>
-            <button class="gen-btn" style="background:orange" onclick="g('30 DAYS')">30 DAYS</button>
-            <div id="res" style="color:yellow; font-size: 20px; margin-top:10px;"></div>
-        </div>
+    <div id="adminLogin" class="box" style="display:none;">
+        <h2>ADMIN ACCESS</h2>
+        <input type="password" id="adminKey" placeholder="ENTER MASTER KEY (9911)">
+        <button class="btn" onclick="authAdmin()">ENTER COMMAND CENTER</button>
+    </div>
 
-        <div style="margin-top:20px;">
-            <h3>USER TRACKING LOGS</h3>
-            <table>
-                <tr><th>USER ID</th><th>PLAN</th><th>STATUS</th></tr>
-                <tbody id="logs">
-                    <tr><td>user_test_88</td><td>30 Days</td><td style="color:lime">ACTIVE</td></tr>
-                </tbody>
-            </table>
+    <div id="userLogin" class="box" style="display:none;">
+        <h2>USER LOGIN</h2>
+        <input type="text" id="userName" placeholder="YOUR NAME">
+        <input type="text" id="userKey" placeholder="PAID ACTIVATION CODE">
+        <button class="btn" style="background:#00d4ff" onclick="authUser()">ACTIVATE SYSTEM</button>
+    </div>
+
+    <div id="adminPanel" class="box" style="width: 90%; max-width: 500px;">
+        <h2>A1 COMMAND CENTER</h2>
+        <div style="border: 1px solid #444; padding: 10px; margin-bottom: 15px;">
+            <h3>GENERATE CODE</h3>
+            <button class="btn" style="width:auto; padding: 10px 20px;" onclick="generateCode()">GENERATE 1 DAY KEY</button>
+            <div id="newCode" style="font-size: 24px; color: yellow; margin-top: 10px;"></div>
         </div>
+        <p>ACTIVE USERS: <span id="userCount">0</span></p>
+        <button class="btn" style="background:red; color:white;" onclick="location.reload()">LOGOUT</button>
+    </div>
+
+    <div id="customerInterface" class="box" style="width: 90%; max-width: 500px;">
+        <h2 style="color:lime;">ACCESS GRANTED!</h2>
+        <p>Welcome, <span id="displayUserName"></span></p>
+        <div style="padding: 20px; border: 1px dashed lime;">
+            <p>आपका सिस्टम अब चालू है।</p>
+            <p style="font-size: 10px;">EXPIRES IN: 23h 59m</p>
+        </div>
+        <button class="btn" style="background:red; color:white; margin-top:20px;" onclick="location.reload()">STOP SYSTEM</button>
     </div>
 
     <script>
-        function openSys() {
-            if(document.getElementById('mKey').value === "9911") {
-                document.getElementById('login-gate').style.display = 'none';
-                document.getElementById('admin-panel').style.display = 'block';
-            } else { alert("WRONG KEY!"); }
+        let generatedCodes = []; // यह कोड्स को याद रखेगा
+
+        function showLogin(type) {
+            document.getElementById('mainGate').style.display = 'none';
+            if(type === 'admin') document.getElementById('adminLogin').style.display = 'block';
+            else document.getElementById('userLogin').style.display = 'block';
         }
-        function g(p) {
-            let c = "A1-" + Math.floor(Math.random()*900000+100000);
-            document.getElementById('res').innerText = "GENERATED: " + c + " ("+p+")";
+
+        function authAdmin() {
+            if(document.getElementById('adminKey').value === "9911") {
+                document.getElementById('adminLogin').style.display = 'none';
+                document.getElementById('adminPanel').style.display = 'block';
+            } else { alert("गलत मास्टर की!"); }
+        }
+
+        function generateCode() {
+            let code = "A1-" + Math.floor(100000 + Math.random() * 900000);
+            generatedCodes.push(code); // कोड को लिस्ट में डाल दिया
+            document.getElementById('newCode').innerText = code;
+            alert("नया कोड जनरेट हुआ: " + code);
+        }
+
+        function authUser() {
+            let name = document.getElementById('userName').value;
+            let key = document.getElementById('userKey').value;
+
+            if(generatedCodes.includes(key)) {
+                document.getElementById('userLogin').style.display = 'none';
+                document.getElementById('customerInterface').style.display = 'block';
+                document.getElementById('displayUserName').innerText = name;
+            } else {
+                alert("गलत या एक्सपायर्ड कोड! कृपया एडमिन से कोड खरीदें।");
+            }
         }
     </script>
+
 </body>
 </html>
