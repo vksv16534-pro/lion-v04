@@ -1,63 +1,80 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>A1 SECURE CORE - ENCRYPTED</title>
+    <title>A1 COMMANDER - SECURE ACCESS</title>
     <style>
-        /* एकदम डार्क और हैकर थीम */
-        body { background: #000; color: #00ff41; font-family: 'Courier New', monospace; margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; }
-        #security-gate { border: 2px solid #00ff41; padding: 40px; text-align: center; box-shadow: 0 0 100px #00ff41; background: rgba(0,10,0,0.95); border-radius: 10px; }
-        input { background: #000; border: 1px solid #00ff41; color: #00ff41; padding: 15px; margin: 15px 0; width: 280px; font-size: 20px; text-align: center; outline: none; }
-        .unlock-btn { background: #00ff41; color: #000; padding: 15px 50px; border: none; font-weight: bold; cursor: pointer; letter-spacing: 2px; }
-        #main-system { display: none; width: 100%; height: 100vh; padding: 20px; background: #000510; }
-        .warning { color: red; font-size: 12px; margin-top: 10px; font-weight: bold; }
+        body { background: #000; color: #00ff41; font-family: 'Courier New', monospace; margin: 0; overflow: hidden; }
+        #lock-screen { position: fixed; width: 100%; height: 100%; background: #000; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 1000; }
+        #admin-panel { display: none; padding: 20px; background: #000510; height: 100vh; overflow-y: auto; }
+        .card { border: 1px solid #00d4ff; background: rgba(0, 20, 50, 0.5); padding: 15px; margin-bottom: 15px; border-radius: 5px; box-shadow: 0 0 10px #00d4ff; }
+        input { background: #111; border: 1px solid #00ff41; color: #00ff41; padding: 10px; margin: 10px; width: 250px; text-align: center; }
+        .btn { background: #00ff41; color: #000; padding: 10px 20px; border: none; font-weight: bold; cursor: pointer; }
+        .gen-btn { background: #004466; color: white; border: 1px solid #00d4ff; padding: 10px; margin: 5px; font-size: 12px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid #113355; padding: 8px; font-size: 12px; text-align: left; }
     </style>
 </head>
 <body>
 
-    <div id="security-gate">
-        <h1 style="margin-bottom: 5px;">A1 COMMANDER</h1>
-        <p style="font-size: 12px; color: #888;">ENCRYPTION: AES-256 BIT</p>
-        <hr border="1" color="#00ff41">
-        
-        <div id="login-fields">
-            <input type="password" id="masterKey" placeholder="ENTER ACCESS KEY">
-            <br>
-            <button class="unlock-btn" onclick="verifyAccess()">AUTHORIZE</button>
-        </div>
-        
-        <p class="warning" id="error-msg"></p>
-        <p style="font-size: 10px; color: #444;">Access attempts are being logged (IP Tracked)</p>
+    <div id="lock-screen">
+        <h2 style="text-shadow: 0 0 10px #00ff41;">A1 MASTER SYSTEM</h2>
+        <input type="password" id="accessKey" placeholder="ENTER ACCESS KEY">
+        <button class="btn" onclick="checkAuth()">AUTHORIZE</button>
+        <p style="color:red; font-size: 11px; margin-top: 20px;">FORGOT? OTP TO: Ak4041860@gmail.com</p>
     </div>
 
-    <div id="main-system">
-        <h2 style="border-bottom: 2px solid #00d4ff;">SYSTEM LIVE: WELCOME AK4041860</h2>
-        <p>Current Status: <span style="color:lime">PROTECTED</span></p>
-        <button onclick="location.reload()" style="background:red; color:white;">EMERGENCY LOCK</button>
+    <div id="admin-panel">
+        <div style="display: flex; justify-content: space-between; border-bottom: 2px solid #00d4ff; padding-bottom: 10px;">
+            <h3>SYSTEM LIVE: WELCOME AK4041860</h3>
+            <button onclick="location.reload()" style="background:red; color:white; border:none; padding:5px 10px;">LOGOUT</button>
+        </div>
+
+        <div class="card">
+            <h4>GENERATE ACTIVATION CODES</h4>
+            <button class="gen-btn" onclick="addCode('1 DAY')">[1 DAY]</button>
+            <button class="gen-btn" style="background:#440066" onclick="addCode('7 DAYS')">[7 DAYS]</button>
+            <button class="gen-btn" style="background:#664400" onclick="addCode('30 DAYS')">[30 DAYS]</button>
+            <div id="newCodeDisplay" style="margin-top:10px; font-weight:bold; color:yellow;"></div>
+        </div>
+
+        <div class="card">
+            <h4>LIVE USER TRACKING & LOGS</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>GAME ID</th>
+                        <th>PASSWORD</th>
+                        <th>LOCATION</th>
+                        <th>STATUS</th>
+                        <th>ACTION</th>
+                    </tr>
+                </thead>
+                <tbody id="userLogs">
+                    <tr>
+                        <td>user_test_1</td>
+                        <td>pass123</td>
+                        <td>Mumbai, IN</td>
+                        <td style="color:lime">ACTIVE</td>
+                        <td><button style="background:red; color:white; font-size:10px;">BLOCK</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <script>
-        let attempts = 0;
+        function checkAuth() {
+            if(document.getElementById('accessKey').value === "9911") {
+                document.getElementById('lock-screen').style.display = 'none';
+                document.getElementById('admin-panel').style.display = 'block';
+            } else { alert("WRONG KEY!"); }
+        }
 
-        function verifyAccess() {
-            let key = document.getElementById('masterKey').value;
-            let error = document.getElementById('error-msg');
-
-            // पासवर्ड: 9911 (आप इसे कभी भी बदल सकते हैं)
-            if (key === "9911") {
-                document.getElementById('security-gate').style.display = 'none';
-                document.getElementById('main-system').style.display = 'block';
-                console.log("Access Granted to Administrator");
-            } else {
-                attempts++;
-                error.innerText = "INVALID KEY. ATTEMPT " + attempts + " OF 3";
-                
-                if (attempts >= 3) {
-                    document.getElementById('login-fields').innerHTML = "<h2 style='color:red'>SYSTEM TERMINATED</h2><p>Too many attempts. Your IP has been flagged.</p>";
-                    // यहाँ हम असली ब्लॉक लॉजिक डाल सकते हैं
-                }
-            }
+        function addCode(plan) {
+            let code = "A1-" + Math.floor(100000 + Math.random() * 900000);
+            document.getElementById('newCodeDisplay').innerText = "GENERATED: " + code + " (" + plan + ")";
+            // यहाँ डेटाबेस में कोड सेव करने का फंक्शन लगेगा
         }
     </script>
 </body>
