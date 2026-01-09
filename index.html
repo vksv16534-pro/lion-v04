@@ -1,50 +1,54 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A1 Admin Control Center</title>
+    <title>A1 ADMIN SYSTEM</title>
     <style>
-        /* यहाँ आपका वो डार्क हाई-टेक डिजाइन है */
-        body { background: #000; color: #00ff00; font-family: 'Courier New', monospace; margin: 0; padding: 20px; }
-        .header { display: flex; justify-content: space-between; border: 2px solid #333; padding: 10px; margin-bottom: 20px; }
-        .stat-box { text-align: center; background: #111; padding: 10px; border-radius: 5px; width: 45%; border-left: 5px solid #00ff00; }
-        .user-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        .user-table th, .user-table td { border: 1px solid #333; padding: 10px; text-align: left; }
-        .expired { color: #000; background: #ff0000; font-weight: bold; } /* ब्लैक टेक्स्ट ऑन रेड फॉर एक्सपायर्ड */
-        .btn-gen { background: #00ff00; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; }
+        body { background: #000; color: #00ff00; font-family: sans-serif; text-align: center; }
+        #login-screen { margin-top: 100px; }
+        input { padding: 10px; margin: 5px; background: #222; color: #fff; border: 1px solid #00ff00; }
+        .btn { padding: 10px 20px; background: #00ff00; color: #000; font-weight: bold; cursor: pointer; }
+        #admin-panel { display: none; padding: 20px; }
     </style>
 </head>
 <body>
-    <div class="header">
-        <div class="stat-box">TOTAL USERS: <span id="total-count">0</span></div>
-        <div class="stat-box">ONLINE NOW: <span id="online-count">0</span></div>
+
+    <div id="login-screen">
+        <h2>A1 ADMIN ACCESS</h2>
+        <input type="text" id="user" placeholder="Admin ID"><br>
+        <input type="password" id="pass" placeholder="Password"><br>
+        <button class="btn" onclick="checkLogin()">LOGIN</button><br><br>
+        <a href="#" style="color:red" onclick="sendOTP()">Forgot Password? (Email Recovery)</a>
     </div>
 
-    <h3>A1 ACTIVATION CODE GENERATOR</h3>
-    <button class="btn-gen" onclick="generateCode()">GENERATE A1 CODE</button>
-    <div id="code-list" style="margin-top: 10px;"></div>
-
-    <h3>LIVE USER TRACKING (ID / PASS / LOCATION)</h3>
-    <table class="user-table">
-        <thead>
-            <tr>
-                <th>Game ID</th>
-                <th>Password</th>
-                <th>Location</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody id="user-data">
-            </tbody>
-    </table>
+    <div id="admin-panel">
+        <div style="display:flex; justify-content: space-around; border-bottom: 2px solid #333; padding-bottom: 10px;">
+            <div>TOTAL: <span id="total">0</span></div>
+            <div>ONLINE: <span id="online">0</span></div>
+        </div>
+        <h3>USER TRACKING DATA</h3>
+        <div id="data-list">यहां यूजर का ID, Pass और Location दिखेगा...</div>
+        <br>
+        <button class="btn" onclick="genA1()">GENERATE A1 CODE</button>
+    </div>
 
     <script>
-        // रिकवरी ईमेल सेट कर दी गई है: Ak4041860@gmail.com
-        function generateCode() {
-            let code = "A1-" + Math.random().toString(36).substr(2, 6).toUpperCase();
-            document.getElementById('code-list').innerHTML += "<div>Created: " + code + "</div>";
+        function checkLogin() {
+            // यहाँ अपनी पसंद का ID/Pass डाल देना
+            if(document.getElementById('user').value == 'admin' && document.getElementById('pass').value == '1234') {
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('admin-panel').style.display = 'block';
+            } else { alert('Wrong ID/Pass'); }
+        }
+
+        function sendOTP() {
+            alert('OTP sent to Ak4041860@gmail.com');
+            // यहाँ रिकवरी ईमेल का बैकएंड काम करेगा
+        }
+
+        function genA1() {
+            let code = "A1-" + Math.floor(1000 + Math.random() * 9000);
+            alert("New Code: " + code);
         }
     </script>
 </body>
