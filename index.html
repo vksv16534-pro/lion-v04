@@ -1,48 +1,70 @@
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LION V04</title>
+    <title>LION V04 - MASTER DASHBOARD</title>
     <style>
-        body { background: #000; color: #ff0000; text-align: center; font-family: Arial, sans-serif; padding-top: 50px; }
-        .box { border: 2px solid #ff0000; padding: 30px; display: inline-block; border-radius: 15px; box-shadow: 0 0 15px #ff0000; background: #111; }
-        input { display: block; margin: 15px auto; padding: 12px; width: 80%; border-radius: 5px; border: 1px solid #ff0000; background: #000; color: #fff; font-size: 16px; }
-        button { background: #ff0000; color: #fff; border: none; padding: 12px 25px; border-radius: 5px; font-weight: bold; cursor: pointer; width: 90%; font-size: 18px; }
-        h1 { margin-bottom: 5px; text-shadow: 2px 2px 4px #000; }
-        p { color: #ccc; font-size: 14px; }
+        body { background: #000; color: #ff0000; font-family: sans-serif; text-align: center; margin: 0; padding: 20px; }
+        .box { border: 2px solid #ff0000; padding: 20px; border-radius: 15px; background: #0a0a0a; box-shadow: 0 0 20px #ff0000; max-width: 350px; margin: 50px auto; }
+        h1 { text-shadow: 0 0 10px red; margin: 10px; }
+        input { width: 85%; padding: 12px; margin: 10px 0; border-radius: 5px; border: 1px solid red; background: #000; color: white; }
+        .btn { background: red; color: white; border: none; padding: 12px; width: 90%; border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        
+        /* ये डैशबोर्ड शुरू में छुपा रहेगा */
+        #downloadPage { display: none; }
+        
+        .main-dl { background: #00ff00; color: black; text-decoration: none; padding: 15px; display: block; border-radius: 10px; font-weight: bold; margin: 20px 0; }
+        .small-link { color: #00ffff; font-size: 13px; text-decoration: underline; cursor: pointer; }
+        .ad-box { background: #1a1a1a; padding: 10px; border: 1px dashed yellow; margin: 15px 0; color: yellow; font-size: 11px; }
     </style>
 </head>
 <body>
 
-<div class="box">
-    <h1>LION V04</h1>
-    <p>Premium Mod System</p>
-    
-    <input type="text" id="userid" placeholder="Enter Admin ID">
-    <input type="password" id="userpass" placeholder="Enter Password">
-    
-    <button onclick="startSystem()">LOGIN SYSTEM</button>
-    
-    <div style="margin-top: 20px;">
-        <p>Admin: 9554527334</p>
+    <div id="loginPage" class="box">
+        <h1>LION V04</h1>
+        <p style="color:white">ADMIN ACCESS ONLY</p>
+        
+        <div class="ad-box">MONEY ADS SPACE (Earning System)</div>
+
+        <input type="text" id="user" placeholder="Enter Admin ID">
+        <input type="password" id="pass" placeholder="Enter Password">
+        <button class="btn" onclick="checkLogin()">LOGIN SYSTEM</button>
+        
+        <p style="color:#888; font-size: 12px; margin-top: 20px;">Admin: +91 9554527334</p>
     </div>
-</div>
 
-<script>
-    function startSystem() {
-        var id = document.getElementById("userid").value;
-        var pass = document.getElementById("userpass").value;
+    <div id="downloadPage" class="box">
+        <h1 style="color: #00ff00;">DASHBOARD</h1>
+        <p style="color:white">Welcome Master KADIR</p>
 
-        // यहाँ आपका आईडी और पासवर्ड है
-        if (id == "admin" && pass == "9554") {
-            alert("SUCCESS: Welcome LION V04 Admin!");
-            window.location.href = "https://t.me/your_link"; 
-        } else {
-            alert("ERROR: Wrong ID or Password!");
+        <div class="ad-box">REVENUE ADS (पैसा यहाँ बनेगा)</div>
+
+        <a href="यहाँ_अपना_APK_लिंक_डालें" target="_blank" class="main-dl">DOWNLOAD APK NOW</a>
+
+        <div style="margin-top: 20px; border-top: 1px solid #333; padding-top: 10px;">
+            <p style="font-size: 14px; color: white;">Mirror Link:</p>
+            <a href="यहाँ_अपना_APK_लिंक_डालें" target="_blank" class="small-link">Click here to Download (v2)</a>
+        </div>
+
+        <p style="color:#888; font-size: 12px; margin-top: 20px;">Owner: KADIR MASTER PRO</p>
+    </div>
+
+    <script>
+        function checkLogin() {
+            var u = document.getElementById("user").value;
+            var p = document.getElementById("pass").value;
+
+            // आपका आईडी admin और पासवर्ड 9554
+            if(u == "admin" && p == "9554") {
+                // टेलीग्राम पर भेजने के बजाय यहीं पेज बदल देगा
+                document.getElementById("loginPage").style.display = "none";
+                document.getElementById("downloadPage").style.display = "block";
+            } else {
+                alert("WRONG ID/PASS! CONTACT ADMIN.");
+            }
         }
-    }
-</script>
-
+    </script>
 </body>
 </html>
