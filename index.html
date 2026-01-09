@@ -1,76 +1,90 @@
 
 
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>MASTER ADMIN CONTROL - A1 SYSTEM</title>
+    <title>A1 COMMAND CENTER - ADMIN</title>
     <style>
-        body { background: #050505; color: #00ff41; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; margin: 0; }
-        .box { border: 2px solid #00ff41; padding: 20px; margin: 50px auto; width: 300px; box-shadow: 0 0 20px #00ff41; }
-        input { width: 80%; padding: 10px; margin: 10px 0; background: #111; border: 1px solid #00ff41; color: white; }
-        .btn { background: #00ff41; color: black; padding: 10px 20px; border: none; cursor: pointer; font-weight: bold; width: 100%; }
-        #dashboard { display: none; padding: 20px; }
-        .stat-container { display: flex; justify-content: space-around; margin-bottom: 30px; }
-        .stat-card { background: #111; border: 1px solid #00ff41; padding: 15px; width: 40%; border-radius: 10px; }
-        table { width: 100%; margin-top: 20px; border-collapse: collapse; }
-        th, td { border: 1px solid #333; padding: 12px; text-align: left; }
+        body { 
+            background: #000510 url('https://img.freepik.com/free-vector/abstract-technology-particle-background_23-2148426649.jpg') no-repeat center center fixed; 
+            background-size: cover; color: #00d4ff; font-family: 'Segoe UI', sans-serif; margin: 0; overflow-x: hidden;
+        }
+        .sidebar { width: 250px; position: fixed; height: 100%; background: rgba(0, 10, 30, 0.9); border-right: 1px solid #00d4ff; padding: 20px; }
+        .main-content { margin-left: 280px; padding: 20px; }
+        .card { background: rgba(0, 20, 50, 0.8); border: 1px solid #00d4ff; border-radius: 10px; padding: 20px; margin-bottom: 20px; box-shadow: 0 0 15px #00d4ff; }
+        .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        button { padding: 12px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
+        .btn-day { background: #004466; color: white; border: 1px solid #00d4ff; }
+        .btn-week { background: #440066; color: white; border: 1px solid #ff00ff; }
+        .btn-month { background: #664400; color: white; border: 1px solid #ffff00; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 13px; }
+        th { background: #00d4ff; color: #000; padding: 10px; }
+        td { padding: 10px; border-bottom: 1px solid #113355; }
+        .status-active { color: #00ff00; font-weight: bold; }
+        .btn-action { padding: 5px 10px; font-size: 10px; }
     </style>
 </head>
 <body>
 
-    <div id="login-box" class="box">
-        <h2>A1 ADMIN LOGIN</h2>
-        <input type="text" id="adminId" placeholder="एडमिन आईडी">
-        <input type="password" id="adminPass" placeholder="पासवर्ड">
-        <button class="btn" onclick="login()">प्रवेश करें</button>
-        <p style="font-size: 12px; color: red; cursor: pointer;" onclick="forgot()">Forgot Password? (OTP to Ak4041860@gmail.com)</p>
+<div class="sidebar">
+    <h2>COMMANDER</h2>
+    <p style="color: #888;">Welcome Back, Admin</p>
+    <hr border="0.1" color="#113355">
+    <div style="margin-top: 20px;">
+        <p>📡 SYSTEM: ONLINE</p>
+        <p>👥 USERS: <span id="u-count">250</span></p>
+        <p>📧 ID: Ak4041860</p>
+    </div>
+</div>
+
+<div class="main-content">
+    <div class="card">
+        <h3>GENERATE NEW CODES</h3>
+        <div class="btn-grid">
+            <button class="btn-day" onclick="gen('1 DAY')">[GENERATE 1 DAY CODE]</button>
+            <button class="btn-week" onclick="gen('7 DAYS')">[GENERATE 7 DAYS CODE]</button>
+            <button class="btn-month" onclick="gen('30 DAYS')">[GENERATE 30 DAYS CODE]</button>
+            <button style="background: #ff3333;" onclick="alert('Broadcasting...')">BROADCAST MESSAGE</button>
+        </div>
     </div>
 
-    <div id="dashboard">
-        <h1>A1 CONTROL PANEL</h1>
-        <div class="stat-container">
-            <div class="stat-card"><h3>TOTAL USERS</h3><h2 id="total">0</h2></div>
-            <div class="stat-card"><h3>ONLINE NOW</h3><h2 id="online" style="color: #ff0000;">● 0</h2></div>
-        </div>
-
-        <button class="btn" style="width: 250px;" onclick="generateA1()">GENERATE A1 CODE</button>
-        <div id="codeDisplay" style="margin-top: 10px; font-weight: bold;"></div>
-
-        <h3>LIVE USER DATA (ID / PASS / LOCATION)</h3>
+    <div class="card">
+        <h3>ACTIVATION CODE INVENTORY</h3>
         <table>
             <thead>
                 <tr>
-                    <th>Game ID</th>
-                    <th>Password</th>
-                    <th>Live Location</th>
-                    <th>Status</th>
+                    <th>CODE</th>
+                    <th>STATUS</th>
+                    <th>PLAN</th>
+                    <th>ACTION</th>
                 </tr>
             </thead>
-            <tbody id="userTable">
-                </tbody>
+            <tbody id="inventory">
+                <tr>
+                    <td>A1-91C-786-X1</td>
+                    <td class="status-active">ACTIVE</td>
+                    <td>7 DAYS</td>
+                    <td><button class="btn-action" style="background:red;">BLOCK</button></td>
+                </tr>
+            </tbody>
         </table>
     </div>
+</div>
 
-    <script>
-        // आपका सीक्रेट आईडी पासवर्ड
-        function login() {
-            let id = document.getElementById('adminId').value;
-            let pass = document.getElementById('adminPass').value;
-            if(id === "admin" && pass === "9911") { // पासवर्ड 9911 रखा है
-                document.getElementById('login-box').style.display = 'none';
-                document.getElementById('dashboard').style.display = 'block';
-            } else { alert("गलत एक्सेस!"); }
-        }
+<script>
+    function gen(plan) {
+        let code = "A1-" + Math.random().toString(36).substr(2, 8).toUpperCase();
+        let table = document.getElementById('inventory');
+        let row = `<tr>
+            <td>${code}</td>
+            <td class="status-active">UNUSED</td>
+            <td>${plan}</td>
+            <td><button class="btn-action" style="background:orange;">EDIT</button></td>
+        </tr>`;
+        table.innerHTML = row + table.innerHTML;
+    }
+</script>
 
-        function generateA1() {
-            let code = "A1-" + Math.floor(Math.random() * 900000 + 100000);
-            document.getElementById('codeDisplay').innerHTML = "NEW CODE: " + code;
-        }
-
-        function forgot() {
-            alert("ओटीपी Ak4041860@gmail.com पर भेज दिया गया है।");
-        }
-    </script>
 </body>
 </html>
