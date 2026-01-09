@@ -1,88 +1,84 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>A1 COMMAND CENTER - ADMIN</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A1 COMMANDER PANEL</title>
     <style>
-        body { 
-            background: #000510 url('https://img.freepik.com/free-vector/abstract-technology-particle-background_23-2148426649.jpg') no-repeat center center fixed; 
-            background-size: cover; color: #00d4ff; font-family: 'Segoe UI', sans-serif; margin: 0; overflow-x: hidden;
-        }
-        .sidebar { width: 250px; position: fixed; height: 100%; background: rgba(0, 10, 30, 0.9); border-right: 1px solid #00d4ff; padding: 20px; }
-        .main-content { margin-left: 280px; padding: 20px; }
-        .card { background: rgba(0, 20, 50, 0.8); border: 1px solid #00d4ff; border-radius: 10px; padding: 20px; margin-bottom: 20px; box-shadow: 0 0 15px #00d4ff; }
-        .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        button { padding: 12px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
-        .btn-day { background: #004466; color: white; border: 1px solid #00d4ff; }
-        .btn-week { background: #440066; color: white; border: 1px solid #ff00ff; }
-        .btn-month { background: #664400; color: white; border: 1px solid #ffff00; }
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 13px; }
-        th { background: #00d4ff; color: #000; padding: 10px; }
-        td { padding: 10px; border-bottom: 1px solid #113355; }
-        .status-active { color: #00ff00; font-weight: bold; }
-        .btn-action { padding: 5px 10px; font-size: 10px; }
+        body { background: #000b1a; color: #00d4ff; font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; }
+        .sidebar { width: 260px; background: rgba(0, 20, 40, 0.95); height: 100vh; border-right: 1px solid #00d4ff; padding: 20px; position: fixed; }
+        .main { margin-left: 300px; padding: 20px; width: calc(100% - 340px); }
+        .map-box { background: url('https://upload.wikimedia.org/wikipedia/commons/e/ec/World_map_blank_without_borders.svg') no-repeat center; background-size: contain; height: 250px; border: 1px solid #004466; border-radius: 10px; position: relative; margin-bottom: 20px; }
+        .card { background: rgba(0, 30, 60, 0.7); border: 1px solid #00d4ff; border-radius: 10px; padding: 15px; margin-bottom: 20px; box-shadow: 0 0 15px rgba(0, 212, 255, 0.3); }
+        .btn-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        button { padding: 12px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; text-transform: uppercase; color: white; transition: 0.3s; }
+        .btn-1 { background: #005f87; border: 1px solid #00d4ff; }
+        .btn-7 { background: #5a0087; border: 1px solid #d400ff; }
+        .btn-30 { background: #875a00; border: 1px solid #ffd400; }
+        .btn-msg { background: #cc2200; width: 100%; margin-top: 10px; }
+        .log-item { display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #113355; font-size: 13px; }
+        .status-on { color: #00ff00; font-weight: bold; }
+        .action-btn { padding: 5px 10px; font-size: 11px; margin-left: 5px; border-radius: 3px; }
     </style>
 </head>
 <body>
 
 <div class="sidebar">
-    <h2>COMMANDER</h2>
-    <p style="color: #888;">Welcome Back, Admin</p>
-    <hr border="0.1" color="#113355">
-    <div style="margin-top: 20px;">
-        <p>📡 SYSTEM: ONLINE</p>
-        <p>👥 USERS: <span id="u-count">250</span></p>
-        <p>📧 ID: Ak4041860</p>
+    <h2 style="letter-spacing: 2px;">COMMANDER</h2>
+    <p style="font-size: 12px; color: #888;">Welcome Back, Admin</p>
+    <div style="margin-top: 30px; line-height: 2;">
+        <div>📡 SYSTEM: <span class="status-on">ONLINE</span></div>
+        <div>👥 TOTAL USERS: 250</div>
+        <div>📧 ID: Ak4041860</div>
+    </div>
+    <div style="margin-top: 50px;">
+        <button class="btn-msg" onclick="alert('Sending to all users...')">BROADCAST MESSAGE</button>
     </div>
 </div>
 
-<div class="main-content">
+<div class="main">
     <div class="card">
-        <h3>GENERATE NEW CODES</h3>
-        <div class="btn-grid">
-            <button class="btn-day" onclick="gen('1 DAY')">[GENERATE 1 DAY CODE]</button>
-            <button class="btn-week" onclick="gen('7 DAYS')">[GENERATE 7 DAYS CODE]</button>
-            <button class="btn-month" onclick="gen('30 DAYS')">[GENERATE 30 DAYS CODE]</button>
-            <button style="background: #ff3333;" onclick="alert('Broadcasting...')">BROADCAST MESSAGE</button>
+        <h4 style="margin: 0 0 10px 0;">LIVE USER TRACKING</h4>
+        <div class="map-box">
+            <div style="position:absolute; top:40%; left:70%; width:8px; height:8px; background:red; border-radius:50%; box-shadow: 0 0 10px red;"></div>
+            <div style="position:absolute; top:50%; left:30%; width:8px; height:8px; background:red; border-radius:50%; box-shadow: 0 0 10px red;"></div>
         </div>
     </div>
 
     <div class="card">
-        <h3>ACTIVATION CODE INVENTORY</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>CODE</th>
-                    <th>STATUS</th>
-                    <th>PLAN</th>
-                    <th>ACTION</th>
-                </tr>
-            </thead>
-            <tbody id="inventory">
-                <tr>
-                    <td>A1-91C-786-X1</td>
-                    <td class="status-active">ACTIVE</td>
-                    <td>7 DAYS</td>
-                    <td><button class="btn-action" style="background:red;">BLOCK</button></td>
-                </tr>
-            </tbody>
-        </table>
+        <h4>GENERATE NEW CODES</h4>
+        <div class="btn-grid">
+            <button class="btn-1" onclick="add('1 DAY')">[1 DAY CODE]</button>
+            <button class="btn-7" onclick="add('7 DAYS')">[7 DAYS CODE]</button>
+            <button class="btn-30" onclick="add('30 DAYS')">[30 DAYS CODE]</button>
+            <button style="background:#222; border:1px solid #555;">[RENEW CODE]</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <h4>NEW CONNECTION REQUESTS</h4>
+        <div class="log-item">
+            <span>User: ravi_786 | IP: 103.XXX.X</span>
+            <div>
+                <button class="action-btn" style="background:green;">ACCEPT</button>
+                <button class="action-btn" style="background:red;">REJECT</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h4>ACTIVE USER LOGS</h4>
+        <div id="logs">
+            <div class="log-item"><span>ID: user123 (Samsung S23)</span> <span class="status-on">29d 5h Left</span></div>
+        </div>
     </div>
 </div>
 
 <script>
-    function gen(plan) {
-        let code = "A1-" + Math.random().toString(36).substr(2, 8).toUpperCase();
-        let table = document.getElementById('inventory');
-        let row = `<tr>
-            <td>${code}</td>
-            <td class="status-active">UNUSED</td>
-            <td>${plan}</td>
-            <td><button class="btn-action" style="background:orange;">EDIT</button></td>
-        </tr>`;
-        table.innerHTML = row + table.innerHTML;
+    function add(plan) {
+        let code = "A1-" + Math.random().toString(36).substr(2, 6).toUpperCase();
+        let log = document.getElementById('logs');
+        log.innerHTML = `<div class="log-item"><span>NEW: ${code} (${plan})</span> <button class="action-btn" style="background:#cc2200;">DEACTIVATE</button></div>` + log.innerHTML;
     }
 </script>
 
