@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>A1 COMMANDER PANEL</title>
+    <style>
+        body { background: #000510; color: #00d4ff; font-family: 'Courier New', monospace; padding: 20px; }
+        .card { border: 1px solid #00d4ff; padding: 20px; margin-bottom: 20px; background: rgba(0,20,50,0.5); border-radius: 10px; }
+        .btn { background: #00d4ff; color: #000; padding: 10px 20px; border: none; font-weight: bold; cursor: pointer; margin-right: 10px; }
+        .history { background: #001122; height: 200px; overflow-y: scroll; padding: 10px; border: 1px solid #333; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <h1>A1 COMMANDER DASHBOARD [LIVE]</h1>
+    <div class="card">
+        <h3>CODE GENERATOR (हिस्ट्री के साथ)</h3>
+        <button class="btn" onclick="gen('1 DAY')">1 DAY</button>
+        <button class="btn" style="background:magenta" onclick="gen('7 DAYS')">7 DAYS</button>
+        <div class="history" id="history">कोड हिस्ट्री यहाँ दिखेगी...</div>
+    </div>
+    <script>
+        function gen(plan) {
+            let code = "A1-" + Math.floor(Math.random()*900000);
+            let h = document.getElementById('history');
+            h.innerHTML = `<div>[${plan}] - ${code} - STATUS: UNUSED</div>` + h.innerHTML;
+        }
+    </script>
+</body>
+</html>
