@@ -3,139 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KADIR 786 | AVIATOR SYSTEM</title>
+    <title>KADIR 786 PREDICTOR</title>
     <style>
-        body { background: #000; color: #fff; font-family: Arial, sans-serif; margin: 0; }
-        .admin-secret { background: #0a0a0a; padding: 5px; text-align: center; border-bottom: 1px solid #222; }
-        .staff-btn { color: #222; font-size: 10px; cursor: pointer; text-decoration: none; }
+        body { background: #000; color: #fff; font-family: Arial, sans-serif; margin: 0; padding: 0; }
         
-        .container { padding: 20px; display: flex; flex-direction: column; align-items: center; text-align: center; }
-        input { width: 100%; max-width: 320px; padding: 15px; background: #1a1a1a; border: 1px solid #333; color: #fff; border-radius: 10px; margin-bottom: 15px; }
+        /* --- 1. ADMIN PANEL (TOP) --- */
+        .admin-box { background: #111; border-bottom: 2px solid #00ff41; padding: 15px; }
+        .adm-row { display: flex; gap: 5px; margin-bottom: 10px; }
+        .adm-in { background: #000; border: 1px solid #333; color: #00ff41; padding: 10px; width: 40%; border-radius: 5px; }
+        #adminTools { display: none; margin-top: 10px; border-top: 1px solid #222; padding-top: 10px; }
+        
+        /* --- 2. USER INTERFACE (BOTTOM) --- */
+        .user-container { padding: 20px; text-align: center; }
+        .logo-img { width: 60px; margin-top: 10px; }
+        .u-in { width: 100%; max-width: 350px; padding: 15px; background: #1a1a1a; border: 1px solid #333; color: #fff; border-radius: 10px; margin-bottom: 15px; box-sizing: border-box; }
         .blue-btn { width: 100%; max-width: 350px; padding: 15px; background: #007bff; color: #fff; border: none; border-radius: 30px; font-weight: bold; cursor: pointer; }
 
-        /* Club Selection Grid */
+        /* Club Grid with Wallpapers */
         #clubGrid { display: none; padding: 20px; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .club-box { background: #1a1a1a; border: 1px solid #ffae00; border-radius: 15px; padding: 15px; position: relative; cursor: pointer; }
-        .trend { position: absolute; top: 0; left: 10px; background: #ffae00; color: #000; font-size: 9px; padding: 2px 5px; border-radius: 0 0 5px 5px; font-weight: bold; }
+        .club-card { 
+            background: #1a1a1a; border: 1px solid #ffae00; border-radius: 15px; padding: 15px; 
+            text-align: center; cursor: pointer; position: relative; 
+            background-size: cover; background-position: center; min-height: 100px;
+        }
+        .club-card h4 { margin: 5px 0; background: rgba(0,0,0,0.7); display: inline-block; padding: 2px 5px; }
+        .trend { position: absolute; top: 0; left: 10px; background: #ffae00; color: #000; font-size: 10px; padding: 2px 8px; border-radius: 0 0 5px 5px; font-weight: bold; }
 
-        /* Predictor Page */
-        #predPage { display: none; }
-        .multiplier { font-size: 65px; font-weight: bold; margin: 40px 0; color: #fff; text-shadow: 0 0 20px #ff0000; }
-        .action-btn { width: 100%; max-width: 320px; padding: 15px; border: none; border-radius: 10px; font-weight: bold; margin-bottom: 10px; cursor: pointer; }
-
-        /* Admin Dashboard Overlay */
-        #adminDash { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 1000; padding: 20px; overflow-y: auto; }
-        .admin-card { background: #111; border: 1px solid #00ff41; padding: 15px; border-radius: 10px; margin-bottom: 15px; text-align: left; }
+        /* Prediction System */
+        #predPage { display: none; text-align: center; padding: 20px; }
+        .mult { font-size: 70px; font-weight: bold; margin: 40px 0; color: #fff; text-shadow: 0 0 15px red; }
     </style>
 </head>
 <body>
 
-<div class="admin-secret"><span class="staff-btn" onclick="loginAdmin()">STAFF LOGIN</span></div>
-
-<div id="step1" class="container">
-    <img src="https://cdn-icons-png.flaticon.com/512/7140/7140413.png" width="50" style="margin-top:20px;">
-    <h2>KADIR 786</h2>
-    <p style="color:#666;">AI-Powered Predictor</p>
-    <input type="email" id="uEmail" placeholder="Email Address">
-    <input type="password" id="uPass" placeholder="Password">
-    <button class="blue-btn" onclick="doRegister()">Sign In</button>
-</div>
-
-<div id="clubGrid">
-    <div class="club-box" onclick="openPred('Daman')"><div class="trend">🔥 Trending</div><h4>Daman</h4><p>Server 1 Active</p></div>
-    <div class="club-box" onclick="openPred('1win')"><div class="trend">🔥 Trending</div><h4>1win</h4><p>Server 2 Active</p></div>
-    <div class="club-box" onclick="openPred('55 Club')"><h4>55 Club</h4><p>Server 3 Active</p></div>
-    <div class="club-box" onclick="openPred('Tiranga')"><h4>Tiranga</h4><p>Server 4 Active</p></div>
-</div>
-
-<div id="predPage" class="container">
-    <h2 id="cName" style="color:red">KADIR 786 PREDICTOR</h2>
-    <div class="multiplier" id="displayMult">1.00x</div>
-    
-    <button class="action-btn" style="background:#b30000; color:#fff" onclick="tryPredict()">📈 Get Prediction</button>
-    <button class="action-btn" style="background:#28a745; color:#fff">🎮 Go to Game</button>
-    
-    <div id="activateSection" style="width:100%">
-        <input type="text" id="inputKey" placeholder="Enter Activation Code">
-        <button class="action-btn" style="background:#007bff; color:#fff" onclick="activateHack()">🔑 Activate Hack</button>
+<div class="admin-box">
+    <p style="margin:0 0 10px 0; font-size:12px; color:#00ff41;">MASTER ADMIN: KADIR 786</p>
+    <div class="adm-row">
+        <input type="text" id="aID" class="adm-in" placeholder="ID">
+        <input type="password" id="aPass" class="adm-in" placeholder="Pass">
+        <button onclick="checkAdm()" style="background:#00ff41; border:none; padding:10px; border-radius:5px; flex-grow:1; font-weight:bold;">LOGIN</button>
     </div>
     
-    <p id="statusMsg" style="color:#ffae00; font-size:12px; margin-top:10px;">Status: Unauthorized - Please Activate</p>
-    <p style="font-size:12px;">Admin Contact: 9554527334</p>
+    <div id="adminTools">
+        <button onclick="genKey()" style="background:#ffae00; border:none; padding:10px; border-radius:5px; font-weight:bold;">GENERATE KEY</button>
+        <span id="keyDisplay" style="margin-left:10px; color:yellow; font-weight:bold;"></span>
+        <div id="logs" style="font-size:10px; margin-top:10px; color:#888;">Recent Logs: <br> <span id="userList"></span></div>
+    </div>
 </div>
 
-<div id="adminDash">
-    <h2 style="color:#00ff41">KADIR 786 COMMANDER</h2>
-    <div class="admin-card">
-        <h4>Create Activation Key</h4>
-        <button class="blue-btn" style="background:#00ff41; color:#000" onclick="createKey()">Generate Code</button>
-        <p id="keyShow" style="color:yellow; font-weight:bold; margin-top:10px;"></p>
+<div class="user-container">
+    <div id="step1">
+        <img src="https://cdn-icons-png.flaticon.com/512/7140/7140413.png" class="logo-img">
+        <h2>KADIR 786</h2>
+        <p style="color:#666;">AI-Powered Predictions</p>
+        <input type="email" id="uEmail" class="u-in" placeholder="Email Address">
+        <input type="password" id="uPass" class="u-in" placeholder="Password">
+        <button class="blue-btn" onclick="userIn()">Sign In</button>
     </div>
-    <div class="admin-card">
-        <h4>Captured User Data</h4>
-        <div id="userTable" style="font-size:12px;"></div>
-    </div>
-    <button class="blue-btn" style="background:red" onclick="location.reload()">Exit Admin</button>
-</div>
 
-<script>
-    let db = { users: [], keys: [], activeSession: false };
-
-    function loginAdmin() {
-        let id = prompt("Admin ID:");
-        let ps = prompt("Password:");
-        if(id === "Kadir 786" && ps === "9580") {
-            document.getElementById('adminDash').style.display = 'block';
-        } else { alert("Access Denied"); }
-    }
-
-    function createKey() {
-        let k = "KDR-" + Math.floor(Math.random()*8999+1000);
-        db.keys.push(k);
-        document.getElementById('keyShow').innerText = "New Key: " + k;
-    }
-
-    function doRegister() {
-        let e = document.getElementById('uEmail').value;
-        let p = document.getElementById('uPass').value;
-        if(e && p) {
-            db.users.push({e, p});
-            document.getElementById('userTable').innerHTML += `<p>${e} | ${p} <button style="color:red">BLOCK</button></p>`;
-            document.getElementById('step1').style.display = 'none';
-            document.getElementById('clubGrid').style.display = 'grid';
-        } else { alert("Fill Details!"); }
-    }
-
-    function openPred(name) {
-        document.getElementById('clubGrid').style.display = 'none';
-        document.getElementById('predPage').style.display = 'flex';
-        document.getElementById('cName').innerText = name + " | KADIR 786";
-    }
-
-    function activateHack() {
-        let k = document.getElementById('inputKey').value;
-        if(db.keys.includes(k)) {
-            db.activeSession = true;
-            document.getElementById('activateSection').style.display = 'none';
-            document.getElementById('statusMsg').innerText = "Status: SERVER CONNECTED ✅";
-            document.getElementById('statusMsg').style.color = "#00ff41";
-            alert("Hack Activated Successfully!");
-        } else {
-            alert("Invalid or Expired Key!");
-        }
-    }
-
-    function tryPredict() {
-        if(!db.activeSession) {
-            alert("SERVER ERROR: Please enter Activation Code first to connect with Server!");
-            return;
-        }
-        document.getElementById('displayMult').innerText = "SYNCING...";
-        setTimeout(() => {
-            let res = (Math.random() * (5 - 1.1) + 1.1).toFixed(2);
-            document.getElementById('displayMult').innerText = res + "x";
-        }, 1200);
-    }
-</script>
-</body>
-</html>
+    <div id="clubGrid">
+        <div class="club-card" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR36_jNqTz0u8Xy1S1g5n8E5M4u9WqPq9R5uA&s');" onclick="openPred('Daman')">
+            <div class="trend">🔥 Trending</div><br><h4>Daman</h4><p style="font-size:10px; background:rgba(0,0,0,0.7);">Server 1 Active</p>
+        </div>
+        <div class="club-card" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8X9qT9p7j8-e8R4_5g-1_J8v8j3Y-S-A-9A&s');" onclick="openPred('1win')">
+            <div class="trend">🔥 Trending</div><br><h4>1win</h4><p style="font-size:10px; background:rgba(0,0,0,0.7);">Server 2 Active</p>
+        </div>
+        <div class="club-card" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcST9q6_u9S3H4u8A-Q2x1_m4u7G8u9v8w7X9Q&s');" onclick="openPred('55 Club')">
+            <br><h4>55 Club</h4><p style="font-size:10px; background:rgba(0,0,0,0.7);">Server 3 Active</p>
+        </div>
+        <div class="club-card" style="background-image: url('
