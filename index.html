@@ -1,70 +1,3 @@
-<!DOCTYPE html>
-<html lang="hi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A1 COMMANDER SYSTEM</title>
-    <style>
-        /* Aapka bataya hua High-Tech Circuit Wallpaper */
-        body { 
-            background: #000 url('https://w0.peakpx.com/wallpaper/424/16/HD-wallpaper-circuit-board-green-neon-lines-black-background-circuit-board-background-neon-circuit-board-abstraction-green-neon-background.jpg') no-repeat center center fixed; 
-            background-size: cover; margin: 0; font-family: 'Courier New', monospace; color: #00ff41; 
-            display: flex; justify-content: center; align-items: center; min-height: 100vh;
-        }
-
-        .container {
-            background: rgba(0, 0, 0, 0.9); border: 2px solid #00ff41; padding: 30px; border-radius: 15px;
-            box-shadow: 0 0 30px #00ff41; text-align: center; width: 350px;
-        }
-
-        #adminPanel, #userPanel { display: none; width: 90%; max-width: 800px; }
-
-        input { background: #000; border: 1px solid #00ff41; color: #00ff41; padding: 12px; margin: 10px 0; width: 90%; text-align: center; font-weight: bold; }
-        .btn { background: #00ff41; color: #000; padding: 12px; border: none; width: 100%; font-weight: bold; cursor: pointer; border-radius: 5px; text-transform: uppercase; }
-        
-        .card { border: 1px solid #00d4ff; padding: 15px; margin-top: 20px; background: rgba(0, 20, 40, 0.8); border-radius: 10px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 12px; }
-        th, td { border: 1px solid #00d4ff; padding: 10px; text-align: left; }
-        th { background: #00d4ff; color: #000; }
-    </style>
-</head>
-<body>
-
-    <div id="loginGate" class="container">
-        <h2 style="text-shadow: 0 0 10px #00ff41;">A1 MASTER ACCESS</h2>
-        <input type="text" id="uID" placeholder="ADMIN ID">
-        <input type="password" id="uPass" placeholder="PASSWORD">
-        <button class="btn" onclick="checkAuth()">AUTHORIZE ENTRY</button>
-    </div>
-
-    <div id="adminPanel" class="container">
-        <div style="display:flex; justify-content: space-between; border-bottom: 2px solid #00ff41; padding-bottom:10px;">
-            <h2 style="margin:0;">COMMANDER DASHBOARD</h2>
-            <button onclick="location.reload()" style="background:red; color:white; border:none; padding:5px; cursor:pointer;">LOGOUT</button>
-        </div>
-
-        <div class="card">
-            <h3>KEY GENERATOR</h3>
-            <button class="btn" style="width:auto; margin:5px;" onclick="gen('1 DAY')">1 DAY</button>
-            <button class="btn" style="width:auto; margin:5px; background: #d400ff;" onclick="gen('7 DAYS')">7 DAYS</button>
-            <div id="keyCode" style="font-size: 25px; color: yellow; margin-top:15px; font-weight: bold;"></div>
-        </div>
-
-        <div class="card">
-            <h3>ACTIVE USERS & LOGS</h3>
-            <table>
-                <thead><tr><th>USER</th><th>PLAN</th><th>STATUS</th><th>ACTION</th></tr></thead>
-                <tbody id="logTable">
-                    <tr><td>User_Alpha</td><td>30 Days</td><td style="color:lime;">ACTIVE</td><td><button style="background:red; color:white; border:none;">BLOCK</button></td></tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <script>
-        // Aapka naya ID aur Password
-        const MASTER_ID = "Admin";
-        const MASTER_PASS = "kadir786";
 
         function checkAuth() {
             let id = document.getElementById('uID').value;
@@ -91,3 +24,31 @@
     </script>
 </body>
 </html>
+<style>
+    body { 
+        background-color: #000;
+        /* यह कोडिंग खुद ही सर्किट जैसा ग्रिड बना देगी */
+        background-image: 
+            linear-gradient(rgba(0, 255, 65, 0.1) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0, 255, 65, 0.1) 1px, transparent 1px);
+        background-size: 30px 30px;
+        margin: 0; 
+        font-family: 'Courier New', monospace; 
+        color: #00ff41; 
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        min-height: 100vh;
+    }
+
+    .container {
+        background: rgba(0, 5, 0, 0.95); 
+        border: 2px solid #00ff41; 
+        padding: 30px; 
+        border-radius: 15px;
+        box-shadow: 0 0 20px #00ff41, inset 0 0 10px #00ff41; 
+        text-align: center; 
+        width: 350px;
+    }
+    /* बाकी कोडिंग वैसी ही रहेगी */
+</style>
