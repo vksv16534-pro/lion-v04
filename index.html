@@ -1,54 +1,95 @@
 
-        function checkAuth() {
-            let id = document.getElementById('uID').value;
-            let pass = document.getElementById('uPass').value;
-
-            if(id === MASTER_ID && pass === MASTER_PASS) {
-                document.getElementById('loginGate').style.display = 'none';
-                document.getElementById('adminPanel').style.display = 'block';
-                document.body.style.background = "#000510"; // Dashboard par dark feel
-            } else {
-                alert("Access Denied! Galat ID ya Password.");
-            }
+        <!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A1 COMMANDER SYSTEM</title>
+    <style>
+        /* शेर वाला वॉलपेपर और डार्क थीम */
+        body { 
+            background: #000 url('https://img.freepik.com/premium-photo/neon-lion-wallpaper-dark-background-vibrant-colors_950633-911.jpg') no-repeat center center fixed; 
+            background-size: cover; 
+            margin: 0; 
+            padding: 20px;
+            font-family: 'Courier New', monospace; 
+            color: #00ff41; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        function gen(plan) {
-            let code = "A1-" + Math.floor(100000 + Math.random() * 900000);
-            document.getElementById('keyCode').innerText = "CODE: " + code;
-            
-            // Log mein add karna
-            let table = document.getElementById('logTable');
-            let row = `<tr><td>New_User</td><td>${plan}</td><td style="color:yellow">READY</td><td><button style="background:red; color:white; border:none;">BLOCK</button></td></tr>`;
-            table.innerHTML = row + table.innerHTML;
+        .box {
+            background: rgba(0, 0, 0, 0.85); 
+            border: 2px solid #00ff41; 
+            padding: 20px; 
+            border-radius: 15px;
+            width: 320px;
+            box-shadow: 0 0 20px #00ff41;
+            margin-bottom: 30px; /* दोनों बॉक्स के बीच गैप */
+        }
+
+        input { background: #000; border: 1px solid #00ff41; color: #00ff41; padding: 10px; margin: 10px 0; width: 90%; text-align: center; }
+        .btn { background: #00ff41; color: #000; padding: 10px; border: none; width: 100%; font-weight: bold; cursor: pointer; border-radius: 5px; }
+        .user-btn { background: #00d4ff; color: #000; }
+        
+        h2 { font-size: 18px; margin-bottom: 15px; text-transform: uppercase; text-shadow: 0 0 10px #00ff41; }
+        #adminPanel, #customerSuccess { display: none; }
+    </style>
+</head>
+<body>
+
+    <div id="adminSection" class="box">
+        <h2>ADMIN PORTAL</h2>
+        <div id="adminLogin">
+            <input type="text" id="aID" placeholder="ADMIN ID">
+            <input type="password" id="aPass" placeholder="PASSWORD">
+            <button class="btn" onclick="loginAdmin()">LOGIN ADMIN</button>
+        </div>
+        <div id="adminPanel">
+            <p style="color:yellow;">Welcome, COMMANDER</p>
+            <button class="btn" style="background:orange" onclick="genKey()">GENERATE KEY</button>
+            <div id="keyDisplay" style="margin-top:10px; font-weight:bold;"></div>
+        </div>
+    </div>
+
+    <div id="userSection" class="box">
+        <h2 style="color:#00d4ff; text-shadow: 0 0 10px #00d4ff;">USER ACTIVATION</h2>
+        <div id="userLogin">
+            <input type="text" id="uName" placeholder="NAME">
+            <input type="text" id="uKey" placeholder="ENTER CODE">
+            <button class="btn user-btn" onclick="loginUser()">ACTIVATE SYSTEM</button>
+        </div>
+        <div id="customerSuccess">
+            <p style="color:lime;">SYSTEM ACTIVE!</p>
+            <p id="userNameDisplay"></p>
+        </div>
+    </div>
+
+    <script>
+        let validKeys = [];
+
+        function loginAdmin() {
+            if(document.getElementById('aID').value === "Admin" && document.getElementById('aPass').value === "kadir786") {
+                document.getElementById('adminLogin').style.display = 'none';
+                document.getElementById('adminPanel').style.display = 'block';
+            } else { alert("गलत एडमिन पासवर्ड!"); }
+        }
+
+        function genKey() {
+            let key = "A1-" + Math.floor(100000 + Math.random() * 900000);
+            validKeys.push(key);
+            document.getElementById('keyDisplay').innerText = "Generated: " + key;
+        }
+
+        function loginUser() {
+            let keyInput = document.getElementById('uKey').value;
+            if(validKeys.includes(keyInput)) {
+                document.getElementById('userLogin').style.display = 'none';
+                document.getElementById('customerSuccess').style.display = 'block';
+                document.getElementById('userNameDisplay').innerText = "User: " + document.getElementById('uName').value;
+            } else { alert("गलत कोड! एडमिन से कोड लें।"); }
         }
     </script>
 </body>
 </html>
-<style>
-    body { 
-        background-color: #000;
-        /* यह कोडिंग खुद ही सर्किट जैसा ग्रिड बना देगी */
-        background-image: 
-            linear-gradient(rgba(0, 255, 65, 0.1) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(0, 255, 65, 0.1) 1px, transparent 1px);
-        background-size: 30px 30px;
-        margin: 0; 
-        font-family: 'Courier New', monospace; 
-        color: #00ff41; 
-        display: flex; 
-        justify-content: center; 
-        align-items: center; 
-        min-height: 100vh;
-    }
-
-    .container {
-        background: rgba(0, 5, 0, 0.95); 
-        border: 2px solid #00ff41; 
-        padding: 30px; 
-        border-radius: 15px;
-        box-shadow: 0 0 20px #00ff41, inset 0 0 10px #00ff41; 
-        text-align: center; 
-        width: 350px;
-    }
-    /* बाकी कोडिंग वैसी ही रहेगी */
-</style>
