@@ -1,101 +1,120 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A1 COMMANDER | INJECTOR PRO</title>
+    <title>A1 COMMANDER PRO</title>
     <style>
-        /* शेर वाला असली डार्क वॉलपेपर */
+        /* शेर वाला असली वॉलपेपर जो पूरे स्क्रीन पर फिट होगा */
         body { 
             background: #000 url('https://img.freepik.com/premium-photo/neon-lion-wallpaper-dark-background-vibrant-colors_950633-911.jpg') no-repeat center center fixed; 
-            background-size: cover; margin: 0; font-family: 'Courier New', monospace; color: #00ff41;
-        }
-        .container { display: flex; flex-direction: column; align-items: center; padding: 20px; }
-        
-        /* इंजेक्टर जैसा फ्लोटिंग बॉक्स */
-        .injector-box { 
-            background: rgba(0, 0, 0, 0.9); border: 2px solid #00ff41; border-radius: 20px; 
-            width: 100%; max-width: 380px; padding: 25px; box-shadow: 0 0 30px #00ff41;
-            backdrop-filter: blur(10px); margin-bottom: 30px;
+            background-size: cover; margin: 0; font-family: 'Segoe UI', sans-serif; color: #00ff41;
+            display: flex; flex-direction: column; align-items: center; padding: 15px;
         }
 
-        .header { text-align: center; border-bottom: 2px solid #333; padding-bottom: 10px; margin-bottom: 20px; }
-        .status { color: #00d4ff; font-size: 12px; }
+        .glass-panel { 
+            background: rgba(0, 0, 0, 0.9); border: 1px solid #00ff41; border-radius: 12px; width: 100%; max-width: 400px; padding: 15px;
+            box-shadow: 0 0 20px #00ff41; margin-bottom: 20px;
+        }
 
-        /* इनपुट और बटन्स */
-        input { background: #111; border: 1px solid #00ff41; color: #00ff41; padding: 15px; width: 90%; margin-bottom: 20px; text-align: center; font-size: 16px; border-radius: 10px; }
-        .action-btn { background: #00ff41; color: #000; padding: 15px; border: none; width: 100%; font-weight: bold; cursor: pointer; border-radius: 10px; font-size: 18px; text-transform: uppercase; box-shadow: 0 0 15px #00ff41; }
+        .header { border-bottom: 1px solid #333; padding-bottom: 8px; margin-bottom: 15px; display: flex; justify-content: space-between; font-weight: bold; font-size: 14px; }
+        .live-dot { height: 8px; width: 8px; background: #00ff41; border-radius: 50%; display: inline-block; box-shadow: 0 0 10px #00ff41; }
 
-        /* एडमिन का असली डेटा टेबल */
-        .admin-table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 12px; }
-        .admin-table th, .admin-table td { border: 1px solid #444; padding: 10px; text-align: center; }
-        .admin-table th { background: #00ff41; color: #000; }
+        input { background: #080808; border: 1px solid #00ff41; color: #00ff41; padding: 12px; width: 92%; margin-bottom: 10px; border-radius: 5px; outline: none; }
         
-        #adminPanel, #successScreen { display: none; }
+        .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+        .main-btn { background: #00ff41; color: #000; border: none; padding: 12px; font-weight: bold; cursor: pointer; text-transform: uppercase; border-radius: 5px; }
+        
+        /* डेटा टेबल और लॉग्स */
+        .log-row { background: #111; padding: 10px; border-radius: 5px; margin-top: 10px; font-size: 12px; display: flex; justify-content: space-between; align-items: center; border-left: 3px solid #00ff41; }
+        .block-btn { background: #ff4444; color: #fff; border: none; padding: 5px 10px; border-radius: 3px; font-size: 10px; cursor: pointer; }
+
+        #adminArea, #userActive { display: none; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="injector-box" id="loginBox">
-        <div class="header"><h2>MASTER LOGIN</h2><span class="status">SYSTEM SECURED</span></div>
-        <input type="text" id="admID" placeholder="ENTER ID">
-        <input type="password" id="admPass" placeholder="ENTER PASSWORD">
-        <button class="action-btn" onclick="openAdmin()">AUTHORIZE</button>
-    </div>
-
-    <div id="adminPanel" class="injector-box" style="max-width: 600px;">
-        <div class="header"><h2>COMMANDER DASHBOARD</h2></div>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px;">
-            <button class="action-btn" onclick="gen('1 DAY')" style="font-size: 12px;">1 DAY KEY</button>
-            <button class="action-btn" onclick="gen('7 DAYS')" style="font-size: 12px; background: #00d4ff;">7 DAYS KEY</button>
-            <button class="action-btn" onclick="gen('30 DAYS')" style="font-size: 12px; background: #ffae00;">30 DAYS KEY</button>
-            <button class="action-btn" onclick="gen('LIFETIME')" style="font-size: 12px; background: #d400ff;">LIFETIME</button>
+    <div class="glass-panel" id="adminBox">
+        <div class="header"><span>A1 ADMIN PANEL V4.0</span> <span><span class="live-dot"></span> LIVE</span></div>
+        <div id="adminLogin">
+            <input type="text" id="aID" placeholder="ADMIN ID">
+            <input type="password" id="aPass" placeholder="PASSWORD">
+            <button class="main-btn" style="width:100%" onclick="authA()">ENTER COMMAND CENTER</button>
         </div>
-        <div id="showKey" style="color: yellow; text-align: center; font-size: 24px; margin-bottom: 20px;"></div>
-        
-        <h3>LIVE DEVICE TRACKER</h3>
-        <table class="admin-table">
-            <thead><tr><th>DEVICE</th><th>PLAN</th><th>STATUS</th><th>ACTION</th></tr></thead>
-            <tbody id="logList"></tbody>
-        </table>
-    </div>
 
-    <div class="injector-box" id="userBox">
-        <div class="header"><h2 style="color: #00d4ff;">A1 INJECTOR</h2><span class="status">READY TO INJECT</span></div>
-        <div id="userEntry">
-            <input type="text" id="inputKey" placeholder="PAID KEY ONLY">
-            <button class="action-btn" style="background: #00d4ff;" onclick="startInject()">ACTIVATE SYSTEM</button>
-        </div>
-        <div id="successScreen" style="text-align: center;">
-            <h2 style="color: lime;">INJECTION SUCCESS!</h2>
-            <div style="height: 5px; background: #222; margin-top: 10px;"><div style="width: 100%; height: 100%; background: #00d4ff; animation: pulse 1s infinite;"></div></div>
+        <div id="adminArea">
+            <div style="display: flex; justify-content: space-around; background: #050505; padding: 10px; border-radius: 5px; margin-bottom: 15px;">
+                <div style="text-align:center"><small>USERS</small><br><b id="uCount">0</b></div>
+                <div style="text-align:center"><small>KEYS</small><br><b id="kCount">0</b></div>
+                <div style="text-align:center; color: #00d4ff;"><small>SERVER</small><br><b>STABLE</b></div>
+            </div>
+            
+            <p style="font-size: 11px;">GENERATE ACTIVATION KEY:</p>
+            <div class="btn-grid">
+                <button class="main-btn" onclick="genK('1 DAY')">1 DAY</button>
+                <button class="main-btn" onclick="genK('7 DAYS')" style="background:#00d4ff">7 DAYS</button>
+                <button class="main-btn" onclick="genK('30 DAYS')" style="background:#ffae00">30 DAYS</button>
+                <button class="main-btn" onclick="genK('LIFETIME')" style="background:#d400ff">LIFETIME</button>
+            </div>
+            <div id="newKey" style="margin: 15px 0; font-size: 20px; color: yellow; text-align: center; border: 1px dashed yellow; padding: 10px; display: none;"></div>
+            
+            <p style="font-size: 11px; margin-top: 15px;">LIVE DEVICE TRACKER:</p>
+            <div id="logsContainer"></div>
         </div>
     </div>
-</div>
 
-<script>
-    let keys = [];
-    function openAdmin() {
-        if(document.getElementById('admID').value === "Admin" && document.getElementById('admPass').value === "kadir786") {
-            document.getElementById('loginBox').style.display = 'none';
-            document.getElementById('adminPanel').style.display = 'block';
-        } else { alert("WRONG ACCESS!"); }
-    }
-    function gen(p) {
-        let k = "A1-" + Math.floor(Math.random()*900000+100000);
-        keys.push({code: k, plan: p});
-        document.getElementById('showKey').innerText = k;
-    }
-    function startInject() {
-        let k = document.getElementById('inputKey').value;
-        let match = keys.find(x => x.code === k);
-        if(match) {
-            document.getElementById('userEntry').style.display = 'none';
-            document.getElementById('successScreen').style.display = 'block';
-            document.getElementById('logList').innerHTML += `<tr><td>Mobile_Android</td><td>${match.plan}</td><td style="color:lime">LIVE</td><td><button style="background:red; color:white; border:none; padding:5px;">BLOCK</button></td></tr>`;
-        } else { alert("INVALID CODE"); }
-    }
-</script>
+    <div class="glass-panel" style="border-color: #00d4ff;">
+        <div class="header" style="color:#00d4ff; border-color:#00d4ff;"><span>USER INJECTOR PORTAL</span> <span>V1.5</span></div>
+        <div id="userForm">
+            <input type="text" id="uName" placeholder="DEVICE OWNER NAME">
+            <input type="text" id="uKey" placeholder="PAID ACTIVATION KEY">
+            <button class="main-btn" style="background:#00d4ff; width:100%" onclick="authU()">ACTIVATE SYSTEM</button>
+        </div>
+        <div id="userActive" style="text-align:center;">
+            <h2 style="color:lime; margin:0;">INJECTION SUCCESS!</h2>
+            <p id="uWelcome" style="font-size:13px; color:#ccc;"></p>
+            <div style="height:4px; background:#222; width:100%; margin-top:10px;"><div style="width:100%; height:100%; background:#00d4ff; box-shadow:0 0 10px #00d4ff;"></div></div>
+        </div>
+    </div>
+
+    <script>
+        let db = { keys: [], users: [] };
+
+        function authA() {
+            if(document.getElementById('aID').value === "Admin" && document.getElementById('aPass').value === "kadir786") {
+                document.getElementById('adminLogin').style.display='none';
+                document.getElementById('adminArea').style.display='block';
+            } else { alert("WRONG ID/PASS"); }
+        }
+
+        function genK(plan) {
+            let k = "A1-" + Math.floor(Math.random()*900000+100000);
+            db.keys.push({code: k, plan: plan});
+            document.getElementById('newKey').innerText = k;
+            document.getElementById('newKey').style.display = 'block';
+            document.getElementById('kCount').innerText = db.keys.length;
+        }
+
+        function authU() {
+            let name = document.getElementById('uName').value;
+            let key = document.getElementById('uKey').value;
+            let match = db.keys.find(x => x.code === key);
+
+            if(match) {
+                document.getElementById('userForm').style.display='none';
+                document.getElementById('userActive').style.display='block';
+                document.getElementById('uWelcome').innerText = "Welcome " + name + " | Plan: " + match.plan;
+                
+                db.users.push(name);
+                document.getElementById('uCount').innerText = db.users.length;
+                let log = `<div class="log-row">
+                    <span><b>${name}</b><br><small style="color:#666">Mobile_Android</small></span>
+                    <span style="color:yellow; font-size:10px;">${match.plan}</span>
+                    <button class="block-btn" onclick="this.parentElement.remove()">BLOCK</button>
+                </div>`;
+                document.getElementById('logsContainer').innerHTML += log;
+            } else { alert("INVALID KEY!"); }
+        }
+    </script>
 </body>
 </html>
